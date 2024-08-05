@@ -1,19 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	// 전송 데이터 수신
-	String param = request.getQueryString();
-	String uid  = request.getParameter("uid");
+	
+	String param = request.getQueryString();	
+	String uid = request.getParameter("uid");
 	String name = request.getParameter("name");
-	String age  = request.getParameter("age");
+	String age = request.getParameter("age");
+		
 %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>result1</title>
+	<title>result2</title>
 </head>
 <body>
-	<h3>GET 요청 데이터 수신</h3>
+	<h3>POST 요청 데이터 수신</h3>
 	
 	<p>
 		파라미터 : <%= param %><br>

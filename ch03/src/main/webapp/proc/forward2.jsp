@@ -3,13 +3,13 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>redirect1</title>
+	<title>forward2</title>
 </head>
 <body>
-	<h3>redirect1 페이지</h3>
+	<h3>포워드2 페이지</h3>
+	
 	<%
-		// 해당 주소로 다시 요청 명령
-		response.sendRedirect("../1.request.jsp");
+		pageContext.forward("https://naver.com");
 	%>
 </body>
 </html>

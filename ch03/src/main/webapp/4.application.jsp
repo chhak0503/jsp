@@ -29,5 +29,6 @@
 	<h4>자원 경로</h4>
 	<%= application.getRealPath("./4.application.jsp") %>
 	
+	
 </body>
 </html>

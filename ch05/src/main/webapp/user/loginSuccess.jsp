@@ -1,6 +1,9 @@
 <%@page import="sub1.UserVO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
+
+
+
 	// 세션 사용자 정보 조회
 	UserVO sessUser = (UserVO) session.getAttribute("sessUser");
 	

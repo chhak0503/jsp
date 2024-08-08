@@ -8,7 +8,7 @@
 <body>
 	<h3>쿠키확인</h3>
 	<%
-		// request는 기본적으로 쿠키를 가지고 요청
+		// request는 기본적으로 해당 서버에서 생성한 쿠키를 가지고 요청
 		Cookie[] cookies = request.getCookies();
 	
 		for(Cookie cookie : cookies){	

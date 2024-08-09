@@ -79,7 +79,7 @@
 			<td><%= vo.getHp() %></td>
 			<td><%= vo.getAge() %></td>
 			<td>
-				<a href="#">수정</a>
+				<a href="/ch06/user1/modify.jsp?uid=<%= vo.getUid() %>">수정</a>
 				<a href="#">삭제</a>
 			</td>
 		</tr>
@@ -87,3 +87,8 @@
 	</table>
 </body>
 </html>
+
+
+
+
+

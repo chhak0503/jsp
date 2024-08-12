@@ -74,7 +74,7 @@
 			<td><%= vo.getSname() %></td>
 			<td><%= vo.getRdate().substring(0, 10) %></td>
 			<td>
-				<a href="#">삭제</a>
+				<a href="./proc/fileDelete.jsp?no=<%= vo.getNo() %>">삭제</a>
 				<a href="./proc/fileDownload.jsp?no=<%= vo.getNo() %>">다운로드</a>
 			</td>			
 		</tr>

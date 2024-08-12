@@ -1,3 +1,8 @@
+<%@page import="java.io.IOException"%>
+<%@page import="java.io.OutputStream"%>
+<%@page import="java.nio.file.Paths"%>
+<%@page import="java.nio.file.Files"%>
+<%@page import="java.io.InputStream"%>
 <%@page import="java.io.BufferedOutputStream"%>
 <%@page import="java.io.FileInputStream"%>
 <%@page import="java.io.BufferedInputStream"%>
@@ -56,9 +61,14 @@
 	String path = application.getRealPath("/uploads");
 	File file = new File(path + File.separator + vo.getSname());
 	
+	
 	BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
 	BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
 	
+	bis.transferTo(bos); // 파일 내용을 간단하게 전송
+    bos.flush();
+	
+	/*
 	while(true){
 		int data = bis.read();
 		if(data == -1){
@@ -67,8 +77,13 @@
 		
 		bos.write(data);
 	}
+	*/
 	
 	bos.close();
 	bis.close();
+	
+	
+	
+	
 %>
 

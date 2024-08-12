@@ -8,6 +8,9 @@
 		날짜 : 2024/08/12
 		이름 : 김철학
 		내용 : 파일 업로드 실습하기
+		
+		- 톰캣 context.xml > Context 태그에 allowCasualMultipartParsing="true" 설정
+		- 톰캣 server.xml > Connector 태그에 maxPostSize="10485760" (1024 x 1024 x 10 = 10MB) 설정
 	-->
 </head>
 <body>

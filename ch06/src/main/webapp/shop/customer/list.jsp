@@ -8,9 +8,8 @@
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.naming.Context"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	
-	List<CustomerVO> customers = new ArrayList<>(); 
+<%	
+	List<CustomerVO> customers = new ArrayList<>();
 
 	try {
 		// 1단계 - JNDI 서비스 객체 생성

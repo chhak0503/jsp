@@ -14,8 +14,7 @@
 			
 			
 			btnSubmit.onclick = (e) => {
-				e.preventDefault();
-				
+				e.preventDefault();				
 				
 				const uid = formUser.uid.value;
 				const name = formUser.name.value;
@@ -35,11 +34,21 @@
 				console.log(jsonData);
 				
 				// 서버 전송
-				fetch('')
+				fetch('./registerProc.jsp', {
+						method: 'POST',
+						headers: {'Content-Type': 'application/json'},
+						body: JSON.stringify(jsonData)
+					})
 					.then(response => response.json())
 					.then(data => {
 						console.log(data);
 						
+						// 서버에서 결과 데이터 수신
+						if(data.result > 0){
+							alert('등록 성공!');
+						}else{
+							alert('등록 실패!');
+						}						
 						
 					})
 					.catch(err => {

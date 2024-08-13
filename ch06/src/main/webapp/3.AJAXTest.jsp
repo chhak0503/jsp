@@ -16,8 +16,24 @@
 	<h4>JSON 생성</h4>
 	<a href="./data/json1.jsp">JSON1 생성하기</a><br>
 	<a href="./data/json2.jsp">JSON2 생성하기</a><br>
+	<a href="./data/xml1.jsp">XML1 생성하기</a><br>
+	<a href="./data/xml2.jsp">XML2 생성하기</a><br>
 	
+	<h4>AJAX CRUD</h4>
+	<a href="./ajax/user1/list.jsp">user1</a>
 	
 	
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,3 +1,7 @@
+<%@page import="org.jdom2.output.Format"%>
+<%@page import="org.jdom2.output.XMLOutputter"%>
+<%@page import="org.jdom2.Element"%>
+<%@page import="org.jdom2.Document"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="javax.sql.DataSource"%>
 <%@page import="javax.naming.InitialContext"%>
@@ -9,7 +13,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="user1.User1VO"%>
 <%@page import="java.util.List"%>
-<%@ page contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/xml; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%
 	List<User1VO> users = new ArrayList<>();
 	
@@ -51,11 +55,41 @@
 
 	//System.out.println(users);
 	
-	// JSON 생성 (page 지시자 contentType 꼭 application/json 설정)
-	Gson gson = new Gson();
-	String jsonData = gson.toJson(users);
+	// XML 생성
+	Document doc = new Document();
+	Element eUsers = new Element("users");
 	
-	out.print(jsonData);
+	for(User1VO vo : users){
+		
+		Element eUser = new Element("user");
+		Element eUid = new Element("uid");
+		Element eName = new Element("name");
+		Element eBirth = new Element("birth");
+		Element eHp = new Element("hp");
+		Element eAge = new Element("age");
+		
+		eUid.setText(vo.getUid());
+		eName.setText(vo.getName());
+		eBirth.setText(vo.getBirth());
+		eHp.setText(vo.getHp());
+		eAge.setText(""+vo.getAge());
+		
+		eUser.addContent(eUid);
+		eUser.addContent(eName);
+		eUser.addContent(eBirth);
+		eUser.addContent(eHp);
+		eUser.addContent(eAge);
+		
+		eUsers.addContent(eUser);
+	}
+	
+	doc.setRootElement(eUsers);
+	
+	// XML 출력(page 지시자 contentType 꼭 text/xml 설정, trimDirectiveWhitespaces="true" 설정)
+	XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat());
+	String xml = outputter.outputString(doc);
+	
+	out.print(xml);
 %>
 
 

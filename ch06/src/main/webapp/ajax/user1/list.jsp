@@ -41,6 +41,7 @@
 			
 			
 			document.body.addEventListener('click', function(e){
+				e.preventDefault();
 				
 				// 삭제 클릭 이벤트(동적 이벤트 연결을 위해 body태그에 이벤트 처리를 위임)
 				if(e.target.classList.contains('delete')){
@@ -67,7 +68,10 @@
 				// 수정 클릭 이벤트
 				if(e.target.classList.contains('modify')){
 					
-					location.href = './modify.jsp';
+					const tr = e.target.closest('tr');
+					const uid = tr.children[0].innerText;
+					
+					location.href = './modify.jsp?uid='+uid;
 				}
 				
 				

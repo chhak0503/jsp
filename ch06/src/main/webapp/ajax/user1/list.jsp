@@ -17,31 +17,66 @@
 					console.log(data);
 					
 					for(const user of data){
-						
 						console.log(user.uid);
 						
-						let row = "<tr>";
-							row += "<td>"+user.uid+"</td>";
-							row += "<td>"+user.name+"</td>";
-							row += "<td>"+user.birth+"</td>";
-							row += "<td>"+user.hp+"</td>";
-							row += "<td>"+user.age+"</td>";
-							row += "<td>";
-							row += "<a href='#'>수정</a>";
-							row += "<a href='#'>삭제</a>";
-							row += "</td>";
-							row += "</tr>";							
+						const row = `<tr>
+			                            <td>\${user.uid}</td>
+			                            <td>\${user.name}</td>
+			                            <td>\${user.birth}</td>
+			                            <td>\${user.hp}</td>
+			                            <td>\${user.age}</td>
+			                            <td>
+			                            	<a href='#' class='modify'>수정</a>
+			                            	<a href='#' class='delete'>삭제</a>
+			                            </td>
+			                        </tr>`;
 							
 						table.insertAdjacentHTML('beforeend', row);
+						
 					}
-					
-					
-					
 				})
 				.catch(err => {
 					console.log(err);
 				});
-		}
+			
+			
+			document.body.addEventListener('click', function(e){
+				
+				// 삭제 클릭 이벤트(동적 이벤트 연결을 위해 body태그에 이벤트 처리를 위임)
+				if(e.target.classList.contains('delete')){
+					
+					const tr = e.target.closest('tr');
+					const uid = tr.children[0].innerText;
+					
+					// 삭제 요청
+					fetch('./proc/deleteProc.jsp?uid='+uid)
+						.then(response=>response.json())
+						.then(data => {
+							console.log(data);
+							if(data.result > 0){
+								alert('삭제 했습니다.');
+								tr.remove();
+							}
+							
+						})
+						.catch(err => {
+							console.log(err);
+						});					
+				}
+				
+				// 수정 클릭 이벤트
+				if(e.target.classList.contains('modify')){
+					
+					location.href = './modify.jsp';
+				}
+				
+				
+			});
+			
+			
+			
+			
+		}// onload end
 	</script>
 </head>
 <body>
@@ -57,9 +92,6 @@
 			<th>나이</th>
 			<th>관리</th>
 		</tr>
-		
-		
-		
 	</table>
 	
 </body>

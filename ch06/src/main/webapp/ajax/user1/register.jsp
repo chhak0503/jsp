@@ -34,10 +34,10 @@
 				console.log(jsonData);
 				
 				// 서버 전송
-				fetch('./registerProc.jsp', {
+				fetch('./proc/registerProc.jsp', {
 						method: 'POST',
 						headers: {'Content-Type': 'application/json'},
-						body: JSON.stringify(jsonData)
+						body: JSON.stringify(jsonData) // <-- 반드시 JSON객체를 문자열로 변환
 					})
 					.then(response => response.json())
 					.then(data => {
@@ -54,17 +54,8 @@
 					.catch(err => {
 						console.log(err);
 					});
-				
-				
 			}
-			
-			
-			
 		}
-	
-	
-	
-	
 	</script>
 </head>
 <body>

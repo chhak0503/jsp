@@ -37,7 +37,30 @@ public class User1DAO extends DBHelper {
 	}
 	
 	public User1DTO selectUser1(String uid) {
-		return null;
+		
+		User1DTO dto = null;
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement("select * from `user1` where `uid`=?");
+			psmt.setString(1, uid);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new User1DTO();
+				dto.setUid(rs.getString(1));
+				dto.setName(rs.getString(2));
+				dto.setBirth(rs.getString(3));
+				dto.setHp(rs.getString(4));
+				dto.setAge(rs.getInt(5));
+			}
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 	
 	public List<User1DTO> selectUser1s() {
@@ -69,6 +92,21 @@ public class User1DAO extends DBHelper {
 	
 	public void updateUser1(User1DTO dto) {
 		
+		String sql = "update user1 set `name`=?, `birth`=?, `hp`=?, `age`=? where `uid`=?";
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getBirth());
+			psmt.setString(3, dto.getHp());
+			psmt.setInt(4, dto.getAge());
+			psmt.setString(5, dto.getUid());
+			psmt.executeUpdate();
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deleteUser1(String uid) {

@@ -72,9 +72,28 @@ public class User1DAO extends DBHelper {
 	}
 	
 	public void deleteUser1(String uid) {
-		
+
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement("delete from `user1` where `uid`=?");
+			psmt.setString(1, uid);
+			psmt.executeUpdate();
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
-	
-	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

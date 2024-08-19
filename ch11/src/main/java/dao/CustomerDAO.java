@@ -3,6 +3,9 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import dto.CustomerDTO;
 import util.DBHelper;
 
@@ -13,6 +16,10 @@ public class CustomerDAO extends DBHelper {
 		return instance;
 	}
 	private CustomerDAO() {}
+	
+	// 로거 생성
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	
 	public void insertCustomer(CustomerDTO dto) {
 		
@@ -29,7 +36,8 @@ public class CustomerDAO extends DBHelper {
 			psmt.executeUpdate();
 			closeAll();
 		}catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 	}
@@ -58,7 +66,7 @@ public class CustomerDAO extends DBHelper {
 			}
 			closeAll();
 		}catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		return customers;
 	}

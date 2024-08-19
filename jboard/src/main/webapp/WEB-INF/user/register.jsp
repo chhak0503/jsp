@@ -2,7 +2,7 @@
 <%@ include file="./_header.jsp" %>
 <main>
     <section class="register">
-        <form action="#">
+        <form action="/jboard/user/register.do" method="post">
             <table border="1">
                 <caption>사이트 이용정보 입력</caption>
                 <tr>
@@ -73,7 +73,7 @@
             </table>
 
             <div>
-                <a href="#" class="btnCancel">취소</a>
+                <a href="/jboard/user/login.do" class="btnCancel">취소</a>
                 <input type="submit"   class="btnSubmit" value="회원가입"/>
             </div>    
         </form>

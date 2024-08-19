@@ -25,9 +25,17 @@
             </tr>
         </table>
         <div>
-            <a href="#" class="btnCancel">취소</a>
-            <a href="#" class="btnNext">다음</a>
+            <a href="/jboard/user/login.do" class="btnCancel">취소</a>
+            <a href="/jboard/user/register.do" class="btnNext">다음</a>
         </div>
     </section>
 </main>
 <%@ include file="./_footer.jsp" %>
+
+
+
+
+
+
+
+

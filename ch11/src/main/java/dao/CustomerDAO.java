@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dto.CustomerDTO;
@@ -38,7 +39,28 @@ public class CustomerDAO extends DBHelper {
 	}
 	
 	public List<CustomerDTO> selectCustomers() {
-		return null;
+		
+		List<CustomerDTO> customers = new ArrayList<>();
+		
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select * from `customer`");
+			
+			while(rs.next()) {
+				CustomerDTO dto = new CustomerDTO();
+				dto.setCustId(rs.getString(1));
+				dto.setName(rs.getString(2));
+				dto.setHp(rs.getString(3));
+				dto.setAddr(rs.getString(4));
+				dto.setRdate(rs.getString(5));
+				customers.add(dto);
+			}
+			closeAll();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return customers;
 	}
 	
 	public void updateCustomer(CustomerDTO dto) {

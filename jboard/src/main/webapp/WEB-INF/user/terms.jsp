@@ -6,7 +6,7 @@
             <caption>사이트 이용약관</caption>
             <tr>
                 <td>
-                    <textarea readonly>약관내용</textarea>
+                    <textarea readonly>${termsDto.terms}</textarea>
                     <p>
                         <label><input type="checkbox" name="chk1"/>동의합니다.</label>
                     </p>
@@ -17,7 +17,7 @@
             <caption>개인정보 취급방침</caption>
             <tr>
                 <td>
-                    <textarea readonly>개인정보 내용</textarea>
+                    <textarea readonly>${termsDto.privacy}</textarea>
                     <p>
                         <label><input type="checkbox" name="chk2"/>동의합니다.</label>
                     </p>

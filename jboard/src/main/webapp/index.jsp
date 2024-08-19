@@ -1,11 +1,3 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
-</html>
+<jsp:forward page="./user/login.do"></jsp:forward>
+<%-- <jsp:forward page="./article/list.do"></jsp:forward> --%>

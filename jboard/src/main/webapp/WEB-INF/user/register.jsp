@@ -1,13 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
 <script>
-	//유효성 검사에 사용할 정규표현식
+	// 유효성 검사에 사용할 정규표현식
 	const reUid   = /^[a-z]+[a-z0-9]{4,19}$/g;
 	const rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
 	const reName  = /^[가-힣]{2,10}$/ 
 	const reNick  = /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
 	const reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 	const reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
+	
+	// 유효성 검사에 사용할 상태변수
+	let isUidOk   = false;
+	let isPassOk  = false;
+	let isNameOk  = false;
+	let isNickOk  = false;
+	let isEmailOk = false;
+	let isHpOk    = false;
 
 	window.onload = function(){
 		
@@ -44,9 +52,11 @@
 					if(data.result > 0){
 						resultId.innerText = '이미 사용중인 아이디 입니다.';
 						resultId.style.color = 'red';
+						isUidOk = false;
 					}else{
 						resultId.innerText = '사용 가능한 아이디 입니다.';
 						resultId.style.color = 'green';
+						isUidOk = true;
 					}
 				})
 				.catch(err => {
@@ -69,9 +79,11 @@
 			if(pass1 == pass2){
 				resultPass.innerText = "비밀번호가 일치합니다.";
 				resultPass.style.color = 'green';
+				isPassOk = true;
 			}else{
 				resultPass.innerText = "비밀번호가 일치하지 않습니다.";
 				resultPass.style.color = 'red';
+				isPassOk = false;
 			}
 		});
 		
@@ -82,9 +94,11 @@
 			
 			if(!name.match(reName)){
 				resultName.innerText = "이름이 유효하지 않습니다.";
-				resultName.style.color = 'red';				
+				resultName.style.color = 'red';
+				isNameOk = false;
 			}else{
 				resultName.innerText = "";
+				isNameOk = true;
 			}
 		});
 		
@@ -106,9 +120,11 @@
 					if(data.result > 0){
 						resultNick.innerText = '이미 사용중인 별명입니다.';
 						resultNick.style.color = 'red';
+						isNickOk = false;
 					}else{
 						resultNick.innerText = '사용 가능한 별명입니다.';
 						resultNick.style.color = 'green';
+						isNickOk = true;
 					}
 				})
 				.catch(err => {
@@ -146,10 +162,10 @@
 				if(data.result > 0){
 					resultEmail.innerText = '이미 사용중인 이메일 입니다.';
 					resultEmail.style.color = 'red';
+					isEmailOk = false;
 				}else{
 					resultEmail.innerText = '이메일 인증코드를 확인 하세요.';
 					resultEmail.style.color = 'green';
-					
 					auth.style.display = 'block';
 				}
 				
@@ -174,17 +190,16 @@
 					if(data.result > 0){
 						resultEmail.innerText = '이메일이 인증되었습니다.';
 						resultEmail.style.color = 'green';
+						isEmailOk = true;
 					}else{
 						resultEmail.innerText = '유효한 인증코드가 않습니다.';
 						resultEmail.style.color = 'red';
+						isEmailOk = false;
 					}
-					
 				})
 				.catch(err => {
 					console.log(err);
 				});
-			
-			
 		}
 		
 		// 6.휴대폰 유효성 검사
@@ -195,28 +210,64 @@
 			try{
 				const response = await fetch('/jboard/user/checkUser.do?type=hp&value='+hp);
 				const data = await response.json();
-			
 				console.log(data);
 				
 				if(data.result > 0){
-					
 					resultHp.innerText = '이미 사용중인 휴대폰번호 입니다.';
 					resultHp.style.color = 'red';
-					
+					isHpOk = false;
 				}else{
 					resultHp.innerText = '';
+					isHpOk = true;
 				}
 				
 			}catch(err){
 				console.log(err);
 			}
-			
-			
 		});
 		
 		
-		
-		
+		// 최종 폼 전송 유효성 검사
+		registerForm.onsubmit = function(){
+			
+			// 아이디 유효성 검사 완료 여부
+			if(!isUidOk){
+				alert('아이디가 유효하지 않습니다.');
+				return false; // 폼 전송 취소
+			}
+			
+			// 비밀번호 유효성 검사 완료 여부
+			if(!isPassOk){
+				alert('비밀번호가 유효하지 않습니다.');
+				return false; // 폼 전송 취소
+			}
+			
+			// 이름 유효성 검사 완료 여부
+			if(!isNameOk){
+				alert('이름이 유효하지 않습니다.');
+				return false; // 폼 전송 취소
+			}
+			
+			// 별명 유효성 검사 완료 여부
+			if(!isNickOk){
+				alert('별명이 유효하지 않습니다.');
+				return false; // 폼 전송 취소
+			}
+			
+			// 이메일 유효성 검사 완료 여부
+			if(!isEmailOk){
+				alert('이메일이 유효하지 않습니다.');
+				return false; // 폼 전송 취소
+			}
+			
+			// 휴대폰 유효성 검사 완료 여부
+			if(!isHpOk){
+				alert('휴대폰 번호가 유효하지 않습니다.');
+				return false; // 폼 전송 취소
+			}
+			
+			return true; // 폼 전송
+		}
 		
 	}
 </script>

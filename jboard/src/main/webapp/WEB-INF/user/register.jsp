@@ -15,6 +15,7 @@
 		const registerForm = document.getElementsByTagName('form')[0];
 		const resultId = document.getElementsByClassName('resultId')[0];
 		const resultPass = document.getElementsByClassName('resultPass')[0];
+		const resultName = document.getElementsByClassName('resultName')[0];
 		
 		
 		
@@ -70,10 +71,19 @@
 			}
 		});
 		
-		
-		
-		
 		// 3.이름 유효성 검사
+		registerForm.name.addEventListener('focusout', function(){
+			
+			const name = registerForm.name.value;
+			
+			if(!name.match(reName)){
+				resultName.innerText = "이름이 유효하지 않습니다.";
+				resultName.style.color = 'red';				
+			}else{
+				resultName.innerText = "";
+			}
+		});
+		
 		// 4.별명 유효성 검사
 		// 5.이메일 유효성 검사
 		// 6.휴대폰 유효성 검사
@@ -116,7 +126,8 @@
                 <tr>
                     <td>이름</td>
                     <td>
-                        <input type="text" name="name" placeholder="이름 입력"/>                            
+                        <input type="text" name="name" placeholder="이름 입력"/>
+						<span class="resultName"></span>
                     </td>
                 </tr>
                 <tr>

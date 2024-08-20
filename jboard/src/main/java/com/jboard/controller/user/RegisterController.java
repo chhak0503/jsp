@@ -40,6 +40,7 @@ public class RegisterController extends HttpServlet {
 		String zip = req.getParameter("zip");
 		String addr1 = req.getParameter("addr1");
 		String addr2 = req.getParameter("addr2");
+		String regip = req.getRemoteAddr();
 		
 		// DTO 생성
 		UserDto userDto = new UserDto();
@@ -52,6 +53,7 @@ public class RegisterController extends HttpServlet {
 		userDto.setZip(zip);
 		userDto.setAddr1(addr1);
 		userDto.setAddr2(addr2);
+		userDto.setRegip(regip);
 		
 		// 데이터 저장
 		service.insertUser(userDto);

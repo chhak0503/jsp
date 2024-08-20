@@ -1,25 +1,87 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
 <script>
+	//유효성 검사에 사용할 정규표현식
+	const reUid   = /^[a-z]+[a-z0-9]{4,19}$/g;
+	const rePass  = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,16}$/;
+	const reName  = /^[가-힣]{2,10}$/ 
+	const reNick  = /^[a-zA-Zㄱ-힣0-9][a-zA-Zㄱ-힣0-9]*$/;
+	const reEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+	const reHp    = /^01(?:0|1|[6-9])-(?:\d{4})-\d{4}$/;
+
 	window.onload = function(){
 		
 		const btnCheckUid = document.getElementById('btnCheckUid');
 		const registerForm = document.getElementsByTagName('form')[0];
+		const resultId = document.getElementsByClassName('resultId')[0];
+		const resultPass = document.getElementsByClassName('resultPass')[0];
 		
 		
+		
+		// 1.아이디 유효성 검사
 		btnCheckUid.onclick = function(){
 			
 			const uid = registerForm.uid.value;
 			
+			// 아이디 유효성 검사
+			if(!uid.match(reUid)){
+				resultId.innerText = '아이디가 유효하지 않습니다.';
+				resultId.style.color = 'red';
+				return;
+			}
+			
+			// 중복체크
 			fetch('/jboard/user/checkUser.do?uid='+uid)
 				.then(resp => resp.json())
 				.then(data => {
 					console.log(data);
+					
+					if(data.result > 0){
+						resultId.innerText = '이미 사용중인 아이디 입니다.';
+						resultId.style.color = 'red';
+					}else{
+						resultId.innerText = '사용 가능한 아이디 입니다.';
+						resultId.style.color = 'green';
+					}
 				})
 				.catch(err => {
 					console.log(err);
 				});
 		}
+		
+		// 2.비밀번호 유효성 검사
+		registerForm.pass2.addEventListener('focusout', function(){
+		
+			const pass1 = registerForm.pass1.value;
+			const pass2 = registerForm.pass2.value;
+			
+			if(!pass1.match(rePass)){
+				resultPass.innerText = "비밀번호가 유효하지 않습니다.";
+				resultPass.style.color = 'red';
+				return;
+			}
+			
+			if(pass1 == pass2){
+				resultPass.innerText = "비밀번호가 일치합니다.";
+				resultPass.style.color = 'green';
+			}else{
+				resultPass.innerText = "비밀번호가 일치하지 않습니다.";
+				resultPass.style.color = 'red';
+			}
+		});
+		
+		
+		
+		
+		// 3.이름 유효성 검사
+		// 4.별명 유효성 검사
+		// 5.이메일 유효성 검사
+		// 6.휴대폰 유효성 검사
+		
+		
+		
+		
+		
 	}
 </script>
 <main>

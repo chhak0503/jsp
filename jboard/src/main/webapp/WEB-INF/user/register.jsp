@@ -20,6 +20,7 @@
 		const resultName = document.getElementsByClassName('resultName')[0];
 		const resultNick = document.getElementsByClassName('resultNick')[0];
 		const resultEmail = document.getElementsByClassName('resultEmail')[0];
+		const resultHp = document.getElementsByClassName('resultHp')[0];
 		const auth = document.getElementsByClassName('auth')[0];
 		
 		// 1.아이디 유효성 검사
@@ -186,8 +187,32 @@
 			
 		}
 		
-		
 		// 6.휴대폰 유효성 검사
+		registerForm.hp.addEventListener('focusout', async function(){
+			
+			const hp = registerForm.hp.value;
+			
+			try{
+				const response = await fetch('/jboard/user/checkUser.do?type=hp&value='+hp);
+				const data = await response.json();
+			
+				console.log(data);
+				
+				if(data.result > 0){
+					
+					resultHp.innerText = '이미 사용중인 휴대폰번호 입니다.';
+					resultHp.style.color = 'red';
+					
+				}else{
+					resultHp.innerText = '';
+				}
+				
+			}catch(err){
+				console.log(err);
+			}
+			
+			
+		});
 		
 		
 		
@@ -255,6 +280,7 @@
                     <td>휴대폰</td>
                     <td>
                         <input type="text" name="hp" placeholder="- 포함 13자리 입력" minlength="13" maxlength="13" />
+                        <span class="resultHp"></span>
                     </td>
                 </tr>
                 <tr>

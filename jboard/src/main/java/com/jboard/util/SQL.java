@@ -9,6 +9,7 @@ public class SQL {
 	public static final String WHERE_UID  = "WHERE `uid`=?";
 	public static final String WHERE_NICK = "WHERE `nick`=?";
 	public static final String WHERE_EMAIL = "WHERE `email`=?";
+	public static final String WHERE_HP = "WHERE `hp`=?";
 	
 	public static final String INSERT_USER = "insert into user set "
 											+ "`uid`=?,"

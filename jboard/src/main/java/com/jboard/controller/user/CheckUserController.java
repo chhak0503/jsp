@@ -33,8 +33,7 @@ public class CheckUserController extends HttpServlet {
 		// 데이터 수신
 		String type = req.getParameter("type");
 		String value = req.getParameter("value");
-		logger.debug("type : " + type);
-		logger.debug("value : " + value);
+		logger.debug("type : " + type + ", value : " + value);
 		
 		// 조회하기
 		int result = service.selectCountUser(type, value);

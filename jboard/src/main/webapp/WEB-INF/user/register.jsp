@@ -1,5 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="./_header.jsp" %>
+<script>
+	window.onload = function(){
+		
+		const btnCheckUid = document.getElementById('btnCheckUid');
+		const registerForm = document.getElementsByTagName('form')[0];
+		
+		
+		btnCheckUid.onclick = function(){
+			
+			const uid = registerForm.uid.value;
+			
+			fetch('/jboard/user/checkUser.do?uid='+uid)
+				.then(resp => resp.json())
+				.then(data => {
+					console.log(data);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		}
+	}
+</script>
 <main>
     <section class="register">
         <form action="/jboard/user/register.do" method="post">
@@ -9,7 +31,7 @@
                     <td>아이디</td>
                     <td>
                         <input type="text" name="uid" placeholder="아이디 입력"/>
-                        <button><img src="../images/chk_id.gif" alt=""></button>
+                        <button type="button" id="btnCheckUid"><img src="../images/chk_id.gif" alt=""></button>
                         <span class="resultId"></span>
                     </td>
                 </tr>

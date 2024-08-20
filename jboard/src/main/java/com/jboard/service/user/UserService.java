@@ -21,7 +21,7 @@ public enum UserService {
 	
 	private UserDao dao = UserDao.getInstance();
 	
-	public void sendEmailCode(String email) {
+	public String sendEmailCode(String email) {
 		// 인증코드 생성
 		int code = ThreadLocalRandom.current().nextInt(100000, 1000000);
 		
@@ -59,6 +59,8 @@ public enum UserService {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		return ""+code;
 	}
 	
 	

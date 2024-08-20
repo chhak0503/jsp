@@ -163,8 +163,8 @@
 			const code = registerForm.auth.value;
 			
 			fetch('/jboard/user/checkUser.do', {
-				method: 'POST',
-				body: JSON.stringify({"code":code})
+					method: 'POST',
+					body: JSON.stringify({"code":code})
 				})
 				.then(resp => resp.json())
 				.then(data => {

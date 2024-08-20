@@ -17,6 +17,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/user/checkUser.do")
 public class CheckUserController extends HttpServlet {
@@ -40,7 +41,11 @@ public class CheckUserController extends HttpServlet {
 		
 		if(type.equals("email") && result == 0) {
 			// 이메일 인증번호 발송하기
-			service.sendEmailCode(value);
+			String code = service.sendEmailCode(value);
+			
+			// 세션 저장
+			HttpSession session = req.getSession();
+			session.setAttribute("authCode", code);
 		}
 		
 		// JSON 생성
@@ -55,7 +60,7 @@ public class CheckUserController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
-		// JSON 문자열 스트림 처리
+		// Javascript fetch함수 POST JSON 문자열 스트림 처리
 		BufferedReader reader = req.getReader();
 		StringBuilder requestBody = new StringBuilder();
 		
@@ -68,9 +73,25 @@ public class CheckUserController extends HttpServlet {
 		// JSON 파싱
 		Gson gson = new Gson();
 		Properties prop = gson.fromJson(requestBody.toString(), Properties.class);
-		System.out.println(prop);
+		String code = prop.getProperty("code");
+		logger.debug("code : " + code);
 		
+		// 인증코드 일치 여부 확인
+		HttpSession session = req.getSession();
+		String authCode = (String) session.getAttribute("authCode");
+		logger.debug("authCode : " + authCode);
 		
+		// JSON 생성 후 출력
+		JsonObject json = new JsonObject();
+		
+		if(authCode.equals(code)) {			
+			json.addProperty("result", 1);
+		}else {
+			json.addProperty("result", 0);
+		}
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(json);
 	}
 }
 

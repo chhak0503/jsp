@@ -169,6 +169,15 @@
 				.then(resp => resp.json())
 				.then(data => {
 					console.log(data);
+					
+					if(data.result > 0){
+						resultEmail.innerText = '이메일이 인증되었습니다.';
+						resultEmail.style.color = 'green';
+					}else{
+						resultEmail.innerText = '유효한 인증코드가 않습니다.';
+						resultEmail.style.color = 'red';
+					}
+					
 				})
 				.catch(err => {
 					console.log(err);

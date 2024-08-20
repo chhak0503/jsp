@@ -4,6 +4,9 @@ public class SQL {
 	
 	
 	public static final String SELECT_TERMS = "select * from terms";
+	
+	public static final String SELECT_COUNT_USER = "SELECT COUNT(*) FROM `user` WHERE `uid`=?";
+	
 	public static final String INSERT_USER = "insert into user set "
 											+ "`uid`=?,"
 											+ "`pass`=?,"

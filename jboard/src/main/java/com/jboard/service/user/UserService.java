@@ -11,8 +11,8 @@ public enum UserService {
 	
 	private UserDao dao = UserDao.getInstance();
 	
-	public int selectCountUser(String uid) {
-		return dao.selectCountUser(uid);
+	public int selectCountUser(String type, String value) {
+		return dao.selectCountUser(type, value);
 	}
 	
 	public void insertUser(UserDto dto) {

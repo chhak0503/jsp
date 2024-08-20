@@ -27,11 +27,13 @@ public class CheckUserController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
 		// 데이터 수신
-		String uid = req.getParameter("uid");
-		logger.debug("uid : " + uid);
+		String type = req.getParameter("type");
+		String value = req.getParameter("value");
+		logger.debug("type : " + type);
+		logger.debug("value : " + value);
 		
 		// 조회하기
-		int result = service.selectCountUser(uid);
+		int result = service.selectCountUser(type, value);
 		
 		// JSON 생성
 		JsonObject json = new JsonObject();

@@ -16,8 +16,7 @@
 		const resultId = document.getElementsByClassName('resultId')[0];
 		const resultPass = document.getElementsByClassName('resultPass')[0];
 		const resultName = document.getElementsByClassName('resultName')[0];
-		
-		
+		const resultNick = document.getElementsByClassName('resultNick')[0];
 		
 		// 1.아이디 유효성 검사
 		btnCheckUid.onclick = function(){
@@ -32,7 +31,7 @@
 			}
 			
 			// 중복체크
-			fetch('/jboard/user/checkUser.do?uid='+uid)
+			fetch('/jboard/user/checkUser.do?type=uid&value='+uid)
 				.then(resp => resp.json())
 				.then(data => {
 					console.log(data);
@@ -85,6 +84,34 @@
 		});
 		
 		// 4.별명 유효성 검사
+		registerForm.nick.addEventListener('focusout', function(){
+			
+			const nick = registerForm.nick.value;
+			
+			if(!nick.match(reNick)){
+				resultNick.innerText = '별명이 유효하지 않습니다.';
+				resultNick.style.color = 'red';
+				return;
+			}
+			
+			fetch('/jboard/user/checkUser.do?type=nick&value='+nick)
+				.then(response => response.json())
+				.then(data => {
+					console.log(data);
+					if(data.result > 0){
+						resultNick.innerText = '이미 사용중인 별명입니다.';
+						resultNick.style.color = 'red';
+					}else{
+						resultNick.innerText = '사용 가능한 별명입니다.';
+						resultNick.style.color = 'green';
+					}
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		});
+		
+		
 		// 5.이메일 유효성 검사
 		// 6.휴대폰 유효성 검사
 		

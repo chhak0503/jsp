@@ -1,11 +1,14 @@
 package com.jboard.controller.user;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jboard.service.user.UserService;
 
@@ -35,6 +38,11 @@ public class CheckUserController extends HttpServlet {
 		// 조회하기
 		int result = service.selectCountUser(type, value);
 		
+		if(type.equals("email") && result == 0) {
+			// 이메일 인증번호 발송하기
+			service.sendEmailCode(value);
+		}
+		
 		// JSON 생성
 		JsonObject json = new JsonObject();
 		json.addProperty("result", result);
@@ -47,6 +55,22 @@ public class CheckUserController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
+		// JSON 문자열 스트림 처리
+		BufferedReader reader = req.getReader();
+		StringBuilder requestBody = new StringBuilder();
+		
+		String line;
+		while((line = reader.readLine()) != null){
+			requestBody.append(line);
+		}
+		reader.close();
+
+		// JSON 파싱
+		Gson gson = new Gson();
+		Properties prop = gson.fromJson(requestBody.toString(), Properties.class);
+		System.out.println(prop);
+		
+		
 	}
 }
 

@@ -13,11 +13,14 @@
 		
 		const btnCheckUid = document.getElementById('btnCheckUid');
 		const btnSendEmail = document.getElementById('btnSendEmail');
+		const btnAuthEmail = document.getElementById('btnAuthEmail');
 		const registerForm = document.getElementsByTagName('form')[0];
 		const resultId = document.getElementsByClassName('resultId')[0];
 		const resultPass = document.getElementsByClassName('resultPass')[0];
 		const resultName = document.getElementsByClassName('resultName')[0];
 		const resultNick = document.getElementsByClassName('resultNick')[0];
+		const resultEmail = document.getElementsByClassName('resultEmail')[0];
+		const auth = document.getElementsByClassName('auth')[0];
 		
 		// 1.아이디 유효성 검사
 		btnCheckUid.onclick = function(){
@@ -114,18 +117,64 @@
 		
 		
 		// 5.이메일 유효성 검사
+		let preventDblClick = false;
+		
 		btnSendEmail.onclick = async function(){
 			
 			const email = registerForm.email.value;
 			
+			// 이중 클릭 방지
+			if(preventDblClick){
+				return;
+			}
+			
+			// 이메일 유효성 검사
+			if(!email.match(reEmail)){
+				resultEmail.innerText = '유효한 이메일이 아닙니다.';
+				resultEmail.style.color = 'red';
+				return;
+			}
+			
 			try{
+				preventDblClick = true;
+				
 				const response = await fetch('/jboard/user/checkUser.do?type=email&value='+email);
 				const data = await response.json();
 				console.log(data);
 				
+				if(data.result > 0){
+					resultEmail.innerText = '이미 사용중인 이메일 입니다.';
+					resultEmail.style.color = 'red';
+				}else{
+					resultEmail.innerText = '이메일 인증코드를 확인 하세요.';
+					resultEmail.style.color = 'green';
+					
+					auth.style.display = 'block';
+				}
+				
+				
 			}catch(e){
 				console.log(e);
 			}
+		}
+		
+		btnAuthEmail.onclick = function(){
+			
+			const code = registerForm.auth.value;
+			
+			fetch('/jboard/user/checkUser.do', {
+				method: 'POST',
+				body: JSON.stringify({"code":code})
+				})
+				.then(resp => resp.json())
+				.then(data => {
+					console.log(data);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+			
+			
 		}
 		
 		
@@ -186,9 +235,10 @@
                     <td>
                        <input type="email" name="email" placeholder="이메일 입력"/>
                        <button type="button" id="btnSendEmail"><img src="../images/chk_auth.gif" alt="인증번호 받기"/></button>
+                       <span class="resultEmail"></span>
                        <div class="auth">
                            <input type="text" name="auth" placeholder="인증번호 입력"/>
-                           <button type="button"><img src="../images/chk_confirm.gif" alt="확인"/></button>
+                           <button type="button" id="btnAuthEmail"><img src="../images/chk_confirm.gif" alt="확인"/></button>
                        </div>
                    </td>
                 </tr>

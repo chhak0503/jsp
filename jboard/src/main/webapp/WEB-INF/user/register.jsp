@@ -12,6 +12,7 @@
 	window.onload = function(){
 		
 		const btnCheckUid = document.getElementById('btnCheckUid');
+		const btnSendEmail = document.getElementById('btnSendEmail');
 		const registerForm = document.getElementsByTagName('form')[0];
 		const resultId = document.getElementsByClassName('resultId')[0];
 		const resultPass = document.getElementsByClassName('resultPass')[0];
@@ -113,6 +114,21 @@
 		
 		
 		// 5.이메일 유효성 검사
+		btnSendEmail.onclick = async function(){
+			
+			const email = registerForm.email.value;
+			
+			try{
+				const response = await fetch('/jboard/user/checkUser.do?type=email&value='+email);
+				const data = await response.json();
+				console.log(data);
+				
+			}catch(e){
+				console.log(e);
+			}
+		}
+		
+		
 		// 6.휴대폰 유효성 검사
 		
 		
@@ -168,8 +184,13 @@
                 <tr>
                     <td>E-Mail</td>
                     <td>
-                        <input type="email" name="email" placeholder="이메일 입력"/>
-                    </td>
+                       <input type="email" name="email" placeholder="이메일 입력"/>
+                       <button type="button" id="btnSendEmail"><img src="../images/chk_auth.gif" alt="인증번호 받기"/></button>
+                       <div class="auth">
+                           <input type="text" name="auth" placeholder="인증번호 입력"/>
+                           <button type="button"><img src="../images/chk_confirm.gif" alt="확인"/></button>
+                       </div>
+                   </td>
                 </tr>
                 <tr>
                     <td>휴대폰</td>

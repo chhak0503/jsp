@@ -29,6 +29,8 @@ public class UserDao extends DBHelper {
 			sql.append(SQL.WHERE_UID);
 		}else if(type.equals("nick")) {
 			sql.append(SQL.WHERE_NICK);
+		}else if(type.equals("email")) {
+			sql.append(SQL.WHERE_EMAIL);
 		}
 		
 		try {

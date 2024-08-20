@@ -1,5 +1,7 @@
 /**
- * 
+ * 이클립스 Javascript 파일에서 semi-colon expected 에러가 발생 해결
+ * - 이클립스 종료 후 {에러 발생한 workspace}\.metadata\.plugins\org.eclipse.core.resources\.projects\{프로젝트명} 이동 
+ * - 해당 경로에 .markers 파일을 삭제 후 이클립스 재시작
  */
 // 유효성 검사에 사용할 정규표현식
 const reUid   = /^[a-z]+[a-z0-9]{4,19}$/g;

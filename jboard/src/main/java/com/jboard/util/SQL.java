@@ -27,6 +27,7 @@ public class SQL {
 											+ "`regDate`=NOW()";
 	
 	// article
+	public static final String SELECT_MAX_NO = "select MAX(`no`) from `article`";
 	public static final String INSERT_ARTICLE = "insert into article set "
 												+ "`title`=?,"
 												+ "`content`=?,"
@@ -34,4 +35,21 @@ public class SQL {
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 	
+	// file
+	public static final String INSERT_FILE = "insert into file set "
+											+ "`ano`=?,"
+											+ "`oName`=?,"
+											+ "`sName`=?,"
+											+ "`rdate`=NOW()";
+	
 }
+
+
+
+
+
+
+
+
+
+

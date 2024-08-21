@@ -11,8 +11,8 @@ public enum ArticleService {
 	
 	private ArticleDao dao = ArticleDao.getInstance();
 	
-	public void insertArticle(ArticleDto dto) {
-		dao.insertArticle(dto);
+	public int insertArticle(ArticleDto dto) {
+		return dao.insertArticle(dto);
 	}
 	
 	public ArticleDto selectArticle(int no) {

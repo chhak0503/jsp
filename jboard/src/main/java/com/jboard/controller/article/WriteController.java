@@ -1,9 +1,11 @@
 package com.jboard.controller.article;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.jboard.dao.UserDao;
 import com.jboard.dto.ArticleDto;
+import com.jboard.dto.FileDto;
 import com.jboard.dto.UserDto;
 import com.jboard.service.ArticleService;
 import com.jboard.service.FileService;
@@ -37,17 +39,23 @@ public class WriteController extends HttpServlet {
 		String writer = req.getParameter("writer");
 		String regip = req.getRemoteAddr();
 		
-		// 파일 업로드
-		fileService.fileUpload(req);
-		
 		ArticleDto dto = new ArticleDto();
 		dto.setTitle(title);
 		dto.setContent(content);
 		dto.setWriter(writer);
 		dto.setRegip(regip);
 		
-		articleService.insertArticle(dto);
+		// 글 등록
+		int no = articleService.insertArticle(dto);
 	
+		// 파일 업로드
+		List<FileDto> files = fileService.fileUpload(req);
+		
+		for(FileDto fileDto : files) {
+			fileDto.setAno(no);
+			fileService.insertFile(fileDto);	
+		}
+		
 		resp.sendRedirect("/jboard/article/list.do");
 	}
 }

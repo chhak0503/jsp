@@ -71,8 +71,8 @@ public enum UserService {
 	public void insertUser(UserDto dto) {
 		dao.insertUser(dto);
 	}
-	public UserDto selectUser(String uid) {
-		return dao.selectUser(uid);
+	public UserDto selectUser(String uid, String pass) {
+		return dao.selectUser(uid, pass);
 	}
 	public List<UserDto> selectUsers() {
 		return dao.selectUsers();

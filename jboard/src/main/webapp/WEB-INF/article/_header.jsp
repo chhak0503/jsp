@@ -2,8 +2,8 @@
 <header>
     <h3>Board System v1.0</h3>
     <p>
-        OOO님 반갑습니다.
-        <a href="#" class="logout">[로그아웃]</a>
+        ${sessUser.nick}님 반갑습니다.
+        <a href="/jboard/user/logout.do" class="logout">[로그아웃]</a>
     </p>
 </header>
         

@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
 			resp.sendRedirect("/jboard/article/list.do");
 			
 		}else {
-			// 회원이 아닐 경우
+			// 회원이 아닐 경우 -> 다시 로그인 리다이렉트
 			resp.sendRedirect("/jboard/user/login.do?success=100");
 		}
 	}

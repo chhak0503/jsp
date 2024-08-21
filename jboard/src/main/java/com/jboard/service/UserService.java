@@ -17,8 +17,7 @@ import com.jboard.dto.UserDto;
 
 public enum UserService {
 
-	INSTANCE;
-	
+	INSTANCE;	
 	private UserDao dao = UserDao.getInstance();
 	
 	public String sendEmailCode(String email) {

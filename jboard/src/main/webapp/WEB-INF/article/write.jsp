@@ -14,7 +14,7 @@
             <section class="write">
                 <h3>글쓰기</h3>
                 <article>
-                    <form action="/jboard/article/write.do" method="post">
+                    <form action="/jboard/article/write.do" method="post" enctype="multipart/form-data">
                     	<input type="hidden" name="writer" value="${sessUser.uid}">
                         <table>
                             <tr>
@@ -29,7 +29,13 @@
                             </tr>
                             <tr>
                                 <td>첨부</td>
-                                <td><input type="file" name="file"/></td>
+                                <td>
+                                	<p style="margin-bottom: 6px;">
+                                		최대 2개 파일 첨부 가능, 각 파일당 최대 10MB까지 가능
+                                	</p>
+                                	<input type="file" name="file1"/>
+                                	<input type="file" name="file2"/>                                	
+                                </td>
                             </tr>
                         </table>
                         <div>

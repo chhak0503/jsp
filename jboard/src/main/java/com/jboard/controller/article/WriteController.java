@@ -6,6 +6,7 @@ import com.jboard.dao.UserDao;
 import com.jboard.dto.ArticleDto;
 import com.jboard.dto.UserDto;
 import com.jboard.service.ArticleService;
+import com.jboard.service.FileService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -19,7 +20,8 @@ import jakarta.servlet.http.HttpSession;
 public class WriteController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private ArticleService service = ArticleService.INSTANCE;
+	private ArticleService articleService = ArticleService.INSTANCE;
+	private FileService fileService = FileService.INSTANCE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,13 +37,16 @@ public class WriteController extends HttpServlet {
 		String writer = req.getParameter("writer");
 		String regip = req.getRemoteAddr();
 		
+		// 파일 업로드
+		fileService.fileUpload(req);
+		
 		ArticleDto dto = new ArticleDto();
 		dto.setTitle(title);
 		dto.setContent(content);
 		dto.setWriter(writer);
 		dto.setRegip(regip);
 		
-		service.insertArticle(dto);
+		articleService.insertArticle(dto);
 	
 		resp.sendRedirect("/jboard/article/list.do");
 	}

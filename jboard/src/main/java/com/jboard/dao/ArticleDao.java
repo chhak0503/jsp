@@ -20,11 +20,14 @@ public class ArticleDao extends DBHelper {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public void insertArticle(ArticleDto dto) {
+		
 		try {
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.INSERT_ARTICLE);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getWriter());
+			psmt.setString(4, dto.getRegip());
 			psmt.executeUpdate();
 			closeAll();
 		}catch (Exception e) {

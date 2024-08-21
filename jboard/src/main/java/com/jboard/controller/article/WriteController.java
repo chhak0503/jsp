@@ -2,7 +2,9 @@ package com.jboard.controller.article;
 
 import java.io.IOException;
 
+import com.jboard.dao.UserDao;
 import com.jboard.dto.ArticleDto;
+import com.jboard.dto.UserDto;
 import com.jboard.service.ArticleService;
 
 import jakarta.servlet.RequestDispatcher;
@@ -11,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/article/write.do")
 public class WriteController extends HttpServlet {
@@ -30,10 +33,14 @@ public class WriteController extends HttpServlet {
 		
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
+		String writer = req.getParameter("writer");
+		String regip = req.getRemoteAddr();
 		
 		ArticleDto dto = new ArticleDto();
 		dto.setTitle(title);
 		dto.setContent(content);
+		dto.setWriter(writer);
+		dto.setRegip(regip);
 		
 		service.insertArticle(dto);
 	

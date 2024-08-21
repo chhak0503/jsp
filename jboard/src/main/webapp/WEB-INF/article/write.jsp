@@ -15,6 +15,7 @@
                 <h3>글쓰기</h3>
                 <article>
                     <form action="/jboard/article/write.do" method="post">
+                    	<input type="hidden" name="writer" value="${sessUser.uid}">
                         <table>
                             <tr>
                                 <td>제목</td>

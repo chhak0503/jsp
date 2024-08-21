@@ -7,6 +7,8 @@
 		alert('로그인에 실패했습니다.\n다시 한번 아이디, 비밀번호를 확인 하시기 바랍니다.');
 	}else if(success == 101){
 		alert('정상적으로 로그아웃 되었습니다.');
+	}else if(success == 102){
+		alert('먼저 로그인을 하셔야 합니다.');
 	}
 </script>
 <main>

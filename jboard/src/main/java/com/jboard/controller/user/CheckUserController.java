@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.jboard.service.user.UserService;
+import com.jboard.service.UserService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

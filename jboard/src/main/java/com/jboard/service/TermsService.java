@@ -1,9 +1,9 @@
-package com.jboard.service.user;
+package com.jboard.service;
 
 import java.util.List;
 
-import com.jboard.dao.user.TermsDao;
-import com.jboard.dto.user.TermsDto;
+import com.jboard.dao.TermsDao;
+import com.jboard.dto.TermsDto;
 
 public class TermsService {
 

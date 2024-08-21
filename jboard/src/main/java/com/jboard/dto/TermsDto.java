@@ -1,4 +1,4 @@
-package com.jboard.dto.user;
+package com.jboard.dto;
 
 public class TermsDto {
 	

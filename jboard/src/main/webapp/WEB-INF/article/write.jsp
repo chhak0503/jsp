@@ -14,7 +14,7 @@
             <section class="write">
                 <h3>글쓰기</h3>
                 <article>
-                    <form action="#">
+                    <form action="/jboard/article/write.do" method="post">
                         <table>
                             <tr>
                                 <td>제목</td>

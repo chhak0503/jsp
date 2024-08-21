@@ -1,11 +1,11 @@
-package com.jboard.dao.user;
+package com.jboard.dao;
 
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jboard.dto.user.UserDto;
+import com.jboard.dto.UserDto;
 import com.jboard.util.DBHelper;
 import com.jboard.util.SQL;
 

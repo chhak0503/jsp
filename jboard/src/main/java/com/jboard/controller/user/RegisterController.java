@@ -2,8 +2,8 @@ package com.jboard.controller.user;
 
 import java.io.IOException;
 
-import com.jboard.dto.user.UserDto;
-import com.jboard.service.user.UserService;
+import com.jboard.dto.UserDto;
+import com.jboard.service.UserService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;

@@ -5,6 +5,7 @@ public class SQL {
 	
 	public static final String SELECT_TERMS = "select * from terms";
 	
+	// user
 	public static final String SELECT_COUNT_USER = "SELECT COUNT(*) FROM `user` ";
 	public static final String WHERE_UID  = "WHERE `uid`=?";
 	public static final String WHERE_NICK = "WHERE `nick`=?";
@@ -24,5 +25,10 @@ public class SQL {
 											+ "`addr2`=?,"
 											+ "`regip`=?,"
 											+ "`regDate`=NOW()";
+	
+	// article
+	public static final String INSERT_ARTICLE = "insert into article set "
+												+ "`title`=?,"
+												+ "`content`=?";
 	
 }

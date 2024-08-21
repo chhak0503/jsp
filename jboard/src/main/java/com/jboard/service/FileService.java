@@ -73,7 +73,7 @@ public enum FileService {
 					// 파일 저장
 					part.write(uploadPath + File.separator + sfileName);
 					
-					// fileDTO 생성
+					// fileDTO 생성 후 리스트 저장
 					FileDto fileDto = new FileDto();
 					fileDto.setoName(ofileName);
 					fileDto.setsName(sfileName);

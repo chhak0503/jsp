@@ -31,6 +31,7 @@ public class SQL {
 	public static final String INSERT_ARTICLE = "insert into article set "
 												+ "`title`=?,"
 												+ "`content`=?,"
+												+ "`file`=?,"
 												+ "`writer`=?,"
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";

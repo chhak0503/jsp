@@ -23,7 +23,6 @@ public class WriteController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/article/write.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -46,13 +45,4 @@ public class WriteController extends HttpServlet {
 	
 		resp.sendRedirect("/jboard/article/list.do");
 	}
-	
 }
-
-
-
-
-
-
-
-

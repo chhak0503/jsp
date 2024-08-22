@@ -1,5 +1,6 @@
 package com.jboard.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -54,7 +55,35 @@ public class ArticleDao extends DBHelper {
 	}
 	
 	public List<ArticleDto> selectArticles() {
-		return null;
+		
+		List<ArticleDto> articles = new ArrayList<>();
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_ARTICLES);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				ArticleDto dto = new ArticleDto();
+				dto.setNo(rs.getInt(1));
+				dto.setCate(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setContent(rs.getString(4));
+				dto.setComment(rs.getInt(5));
+				dto.setFile(rs.getInt(6));
+				dto.setHit(rs.getInt(7));
+				dto.setWriter(rs.getString(8));
+				dto.setRegip(rs.getString(9));
+				dto.setRdateSubString(rs.getString(10));
+				articles.add(dto);
+			}
+			closeAll();
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return articles;
 	}
 	
 	public void updateArticle(ArticleDto dto) {

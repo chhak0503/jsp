@@ -30,6 +30,7 @@ public class WriteController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// 데이터 수신
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 		String writer = req.getParameter("writer");
@@ -38,6 +39,7 @@ public class WriteController extends HttpServlet {
 		// 파일 업로드
 		List<FileDto> files = fileService.fileUpload(req);
 		
+		// 글 등록을 위한 DTO 생성
 		ArticleDto dto = new ArticleDto();
 		dto.setTitle(title);
 		dto.setContent(content);

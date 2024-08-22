@@ -27,6 +27,7 @@ public class SQL {
 											+ "`regDate`=NOW()";
 	
 	// article
+	public static final String SELECT_ARTICLES = "select * from `article`";
 	public static final String SELECT_MAX_NO = "select MAX(`no`) from `article`";
 	public static final String INSERT_ARTICLE = "insert into article set "
 												+ "`title`=?,"

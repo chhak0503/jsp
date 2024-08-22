@@ -73,6 +73,9 @@ public class ArticleDto {
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
 	}
+	public void setRdateSubString(String rdate) {
+		this.rdate = rdate.substring(0, 10);
+	}
 	
 	@Override
 	public String toString() {

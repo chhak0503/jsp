@@ -14,6 +14,11 @@
             <section class="write">
                 <h3>글쓰기</h3>
                 <article>
+                	<!-- 
+                		multipart/form-data로 데이터 및 파일 전송을 위해 톰캣 설정해야됨 안하면 getParameter 수신 안됨
+                		 - 톰캣 context.xml > Context 태그에 allowCasualMultipartParsing="true" 설정
+						 - 톰캣 server.xml > Connector 태그에 maxPostSize="10485760" (1024 x 1024 x 10 = 10MB) 설정                		
+                	-->
                     <form action="/jboard/article/write.do" method="post" enctype="multipart/form-data">
                     	<input type="hidden" name="writer" value="${sessUser.uid}">
                         <table>

@@ -87,7 +87,6 @@ public class ArticleDao extends DBHelper {
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
-				
 				if(dto == null) {
 					dto = new ArticleDto();
 					dto.setNo(rs.getInt(1));

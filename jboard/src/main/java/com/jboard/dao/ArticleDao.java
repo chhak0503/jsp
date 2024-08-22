@@ -80,13 +80,14 @@ public class ArticleDao extends DBHelper {
 		return null;
 	}
 	
-	public List<ArticleDto> selectArticles() {
+	public List<ArticleDto> selectArticles(int start) {
 		
 		List<ArticleDto> articles = new ArrayList<>();
 		
 		try {
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.SELECT_ARTICLES);
+			psmt.setInt(1, start);
 			
 			rs = psmt.executeQuery();
 			

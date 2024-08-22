@@ -22,6 +22,22 @@ public enum ArticleService {
 		return lastPageNum;
 	}
 	
+	// 페이지 시작번호(limit용)
+	public int getStartNum(int currentPage) {
+		return (currentPage - 1) * 10;
+	}
+	
+	// 현재 페이지번호 구하기
+	public int getCurrentPage(String pg) {
+		int currentPage = 1;
+		
+		if(pg != null) {
+			currentPage = Integer.parseInt(pg);
+		}
+		
+		return currentPage;
+	}
+	
 	
 	public int insertArticle(ArticleDto dto) {
 		return dao.insertArticle(dto);
@@ -35,8 +51,8 @@ public enum ArticleService {
 		return dao.selectArticle(no);
 	}
 	
-	public List<ArticleDto> selectArticles() {
-		return dao.selectArticles();
+	public List<ArticleDto> selectArticles(int start) {
+		return dao.selectArticles(start);
 	}
 	
 	public void updateArticle(ArticleDto dto) {

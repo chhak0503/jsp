@@ -38,8 +38,8 @@
                 <!-- 페이지 네비게이션 -->
                 <div class="paging">
                     <a href="#" class="prev">이전</a>
-                    <c:forEach var="num" begin="1" end="${lastPageNum}">
-                    	<a href="#" class="num">${num}</a>
+                    <c:forEach var="i" begin="1" end="${lastPageNum}">
+                    	<a href="/jboard/article/list.do?pg=${i}" class="num">${i}</a>
                     </c:forEach>
                     <a href="#" class="next">다음</a>
                 </div>

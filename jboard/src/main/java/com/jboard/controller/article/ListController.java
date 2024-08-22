@@ -23,14 +23,23 @@ public class ListController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		String pg = req.getParameter("pg");
+		
+		// 현재 페이지 번호 구하기
+		int currentPage = service.getCurrentPage(pg);
+		
 		// 전체 게시물 갯수 구하기
 		int total = service.selectCountTotal();
 		
 		// 마지막 페이지 번호 구하기
 		int lastPageNum = service.getLastPageNum(total);
 		
+		// 페이지 시작 번호 구하기
+		int start = service.getStartNum(currentPage);
+		
+		
 		// 데이터 조회
-		List<ArticleDto> articles = service.selectArticles();
+		List<ArticleDto> articles = service.selectArticles(start);
 		
 		// 공유 참조
 		req.setAttribute("articles", articles);

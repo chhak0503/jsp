@@ -28,6 +28,7 @@ public class SQL {
 	
 	// article
 	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `article`";
+	public static final String SELECT_ARTICLE = "SELECT * FROM `article` where `no`=?";
 	public static final String SELECT_ARTICLES = "SELECT a.*, b.nick  from `article` AS a "
 												+ "JOIN `user` AS b ON a.writer = b.uid "
 												+ "ORDER BY `no` DESC "

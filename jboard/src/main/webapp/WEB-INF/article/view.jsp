@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,8 +17,9 @@
                 <table>
                     <tr>
                         <td>제목</td>
-                        <td><input type="text" name="title" value="제목입니다." readonly/></td>
+                        <td><input type="text" name="title" value="${articleDto.title}" readonly/></td>
                     </tr>
+                    <c:if test="${articleDto.file > 0}">
                     <tr>
                         <td>첨부파일</td>
                         <td>
@@ -25,17 +27,18 @@
                             <span>7회 다운로드</span>
                         </td>
                     </tr>
+                    </c:if>
                     <tr>
                         <td>내용</td>
                         <td>
-                            <textarea name="content" readonly>내용 샘플입니다.</textarea>
+                            <textarea name="content" readonly>${articleDto.content}</textarea>
                         </td>
                     </tr>
                 </table>
                 <div>
                     <a href="#" class="btnDelete">삭제</a>
                     <a href="#" class="btnModify">수정</a>
-                    <a href="#" class="btnList">목록</a>
+                    <a href="/jboard/article/list.do" class="btnList">목록</a>
                 </div>  
                 
                 <!-- 댓글리스트 -->

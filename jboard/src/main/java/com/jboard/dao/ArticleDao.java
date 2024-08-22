@@ -45,13 +45,11 @@ public class ArticleDao extends DBHelper {
 			
 		}catch (Exception e) {
 			logger.error(e.getMessage());
-			
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
 				logger.error(e1.getMessage());
 			}
-			
 		}finally {
 			closeAll();
 		}
@@ -76,8 +74,35 @@ public class ArticleDao extends DBHelper {
 		return total;
 	}
 	
-	public ArticleDto selectArticle(int no) {
-		return null;
+	public ArticleDto selectArticle(String no) {
+		
+		ArticleDto dto = null;
+		
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_ARTICLE);
+			psmt.setString(1, no);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new ArticleDto();
+				dto.setNo(rs.getInt(1));
+				dto.setCate(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setContent(rs.getString(4));
+				dto.setComment(rs.getInt(5));
+				dto.setFile(rs.getInt(6));
+				dto.setHit(rs.getInt(7));
+				dto.setWriter(rs.getString(8));
+				dto.setRegip(rs.getString(9));
+				dto.setRdate(rs.getString(10));
+			}
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}finally {
+			closeAll();
+		}
+		return dto;
 	}
 	
 	public List<ArticleDto> selectArticles(int start) {

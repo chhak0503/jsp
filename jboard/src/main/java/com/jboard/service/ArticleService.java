@@ -41,9 +41,11 @@ public enum ArticleService {
 	
 	// 현재 페이지 그룹 구하기 
 	public PageGroupDto getCurrentPageGroup(int currentPage) {
+		
 		int currentPageGroup = (int) Math.ceil(currentPage / 10.0);
 		int pageGroupStart = (currentPageGroup - 1) * 10 + 1;
 		int pageGroupEnd = currentPageGroup * 10;
+		
 		return new PageGroupDto(pageGroupStart, pageGroupEnd);
 	}
 	
@@ -55,7 +57,7 @@ public enum ArticleService {
 		return dao.selectCountTotal();
 	}
 	
-	public ArticleDto selectArticle(int no) {
+	public ArticleDto selectArticle(String no) {
 		return dao.selectArticle(no);
 	}
 	

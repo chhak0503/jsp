@@ -24,24 +24,30 @@
                             <th>조회</th>
                         </tr>
                         <c:forEach var="article" items="${articles}">
-                        <tr>
-                            <td>${article.no}</td>
-                            <td><a href="/jboard/article/view.do?no=${article.no}">${article.title}</a>&nbsp;[${article.comment}]</td>
-                            <td>${article.nick}</td>
-                            <td>${article.rdate}</td>
-                            <td>${article.hit}</td>
-                        </tr>
+	                        <tr>
+	                            <td>${pageStartNum}</td>
+	                            <td><a href="/jboard/article/view.do?no=${article.no}">${article.title}</a>&nbsp;[${article.comment}]</td>
+	                            <td>${article.nick}</td>
+	                            <td>${article.rdate}</td>
+	                            <td>${article.hit}</td>
+	                        </tr>
+	                        <!-- 한번 반복할때마다 pageStartNum을 1씩 차감 -->
+	                        <c:set var="pageStartNum" value="${pageStartNum-1}"/>
                         </c:forEach>
                     </table>
                 </article>
 
                 <!-- 페이지 네비게이션 -->
                 <div class="paging">
-                    <a href="/jboard/article/list.do?pg=${pageGroup.start-1}" class="prev">이전</a>
+                	<c:if test="${pageGroup.start > 1}">
+                    	<a href="/jboard/article/list.do?pg=${pageGroup.start-1}" class="prev">이전</a>
+                    </c:if>
                     <c:forEach var="i" begin="${pageGroup.start}" end="${pageGroup.end}">
                     	<a href="/jboard/article/list.do?pg=${i}" class="num">${i}</a>
                     </c:forEach>
-                    <a href="/jboard/article/list.do?pg=${pageGroup.end+1}" class="next">다음</a>
+                    <c:if test="${pageGroup.end < lastPageNum}">
+                    	<a href="/jboard/article/list.do?pg=${pageGroup.end+1}" class="next">다음</a>
+                    </c:if>
                 </div>
 
                 <!-- 글쓰기 버튼 -->

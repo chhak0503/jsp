@@ -23,8 +23,12 @@
                     <tr>
                         <td>첨부파일</td>
                         <td>
-                            <a href="#">2020년 상반기 매출자료.xls</a>
-                            <span>7회 다운로드</span>
+                        <c:forEach var="file" items="${articleDto.files}">
+	                        <p style="margin-bottom:6px">
+	                            <a href="#">${file.oName}</a>
+	                            <span>${file.download}회 다운로드</span>
+	                        </p>
+                        </c:forEach>
                         </td>
                     </tr>
                     </c:if>

@@ -40,13 +40,23 @@ public enum ArticleService {
 	}
 	
 	// 현재 페이지 그룹 구하기 
-	public PageGroupDto getCurrentPageGroup(int currentPage) {
+	public PageGroupDto getCurrentPageGroup(int currentPage, int lastPageNum) {
 		
 		int currentPageGroup = (int) Math.ceil(currentPage / 10.0);
 		int pageGroupStart = (currentPageGroup - 1) * 10 + 1;
 		int pageGroupEnd = currentPageGroup * 10;
 		
+		if(pageGroupEnd > lastPageNum){
+			pageGroupEnd = lastPageNum;
+		}
+		
 		return new PageGroupDto(pageGroupStart, pageGroupEnd);
+	}
+	
+	// 페이지 시작번호
+	public int getPageStartNum(int total, int currentPage) {
+		int start = (currentPage - 1) * 10;
+		return total - start;
 	}
 	
 	public int insertArticle(ArticleDto dto) {

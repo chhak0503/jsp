@@ -1,5 +1,7 @@
 package com.jboard.dto;
 
+import java.util.List;
+
 public class ArticleDto {
 	
 	private int no;
@@ -15,12 +17,21 @@ public class ArticleDto {
 	
 	// 추가 필드
 	private String nick;
+	private List<FileDto> files;
+	
 	
 	public String getNick() {
 		return nick;
 	}
 	public void setNick(String nick) {
 		this.nick = nick;
+	}
+	
+	public List<FileDto> getFiles() {
+		return files;
+	}
+	public void setFiles(List<FileDto> files) {
+		this.files = files;
 	}
 	
 	

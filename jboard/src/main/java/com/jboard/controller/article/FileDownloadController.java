@@ -29,6 +29,9 @@ public class FileDownloadController extends HttpServlet {
 		// 공유 참조(service -> fileDownload 메서드에서 getAttribute로 가져감)
 		req.setAttribute("fileDto", fileDto);
 		
+		// 파일 다운로드 카운트 업데이트
+		service.updateFileDownloadCount(fno);
+		
 		// 파일 다운로드
 		service.fileDownload(req, resp);
 	}

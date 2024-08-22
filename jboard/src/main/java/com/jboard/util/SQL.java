@@ -54,6 +54,8 @@ public class SQL {
 											+ "`sName`=?,"
 											+ "`rdate`=NOW()";
 	
+	public static final String UPDATE_FILE_DOWNLOAD_COUNT = "update file set `download` = `download` + 1 where `fno`=?";
+	
 }
 
 

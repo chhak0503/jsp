@@ -66,6 +66,18 @@ public class FileDao extends DBHelper {
 	public void updateFile(FileDto dto) {
 		
 	}
+	public void updateFileDownloadCount(String fno) {
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_FILE_DOWNLOAD_COUNT);
+			psmt.setString(1, fno);
+			psmt.executeUpdate();
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}finally {
+			closeAll();
+		}
+	}
 	
 	public void deleteFile(int fno) {
 		

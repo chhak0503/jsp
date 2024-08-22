@@ -27,6 +27,7 @@ public class SQL {
 											+ "`regDate`=NOW()";
 	
 	// article
+	public static final String SELECT_COUNT_TOTAL = "SELECT COUNT(*) FROM `article`";
 	public static final String SELECT_ARTICLES = "SELECT a.*, b.nick  from `article` AS a "
 												+ "JOIN `user` AS b ON a.writer = b.uid "
 												+ "ORDER BY `no` DESC";

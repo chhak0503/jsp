@@ -24,7 +24,7 @@
                         <td>첨부파일</td>
                         <td>
                         <c:forEach var="file" items="${articleDto.files}">
-	                        <p style="margin-bottom:6px">
+	                        <p style="margin:4px 0">
 	                            <a href="#">${file.oName}</a>
 	                            <span>${file.download}회 다운로드</span>
 	                        </p>

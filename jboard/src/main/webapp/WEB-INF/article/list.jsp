@@ -43,7 +43,7 @@
                     	<a href="/jboard/article/list.do?pg=${pageGroup.start-1}" class="prev">이전</a>
                     </c:if>
                     <c:forEach var="i" begin="${pageGroup.start}" end="${pageGroup.end}">
-                    	<a href="/jboard/article/list.do?pg=${i}" class="num">${i}</a>
+                    	<a href="/jboard/article/list.do?pg=${i}" class="num ${currentPage == i ? 'current':'off'}">${i}</a>
                     </c:forEach>
                     <c:if test="${pageGroup.end < lastPageNum}">
                     	<a href="/jboard/article/list.do?pg=${pageGroup.end+1}" class="next">다음</a>

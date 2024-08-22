@@ -37,11 +37,11 @@
 
                 <!-- 페이지 네비게이션 -->
                 <div class="paging">
-                    <a href="#" class="prev">이전</a>
-                    <c:forEach var="i" begin="1" end="${lastPageNum}">
+                    <a href="/jboard/article/list.do?pg=${pageGroup.start-1}" class="prev">이전</a>
+                    <c:forEach var="i" begin="${pageGroup.start}" end="${pageGroup.end}">
                     	<a href="/jboard/article/list.do?pg=${i}" class="num">${i}</a>
                     </c:forEach>
-                    <a href="#" class="next">다음</a>
+                    <a href="/jboard/article/list.do?pg=${pageGroup.end+1}" class="next">다음</a>
                 </div>
 
                 <!-- 글쓰기 버튼 -->

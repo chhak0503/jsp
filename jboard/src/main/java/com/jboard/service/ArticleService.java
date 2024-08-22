@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jboard.dao.ArticleDao;
 import com.jboard.dto.ArticleDto;
+import com.jboard.dto.PageGroupDto;
 
 public enum ArticleService {
 
@@ -38,6 +39,13 @@ public enum ArticleService {
 		return currentPage;
 	}
 	
+	// 현재 페이지 그룹 구하기 
+	public PageGroupDto getCurrentPageGroup(int currentPage) {
+		int currentPageGroup = (int) Math.ceil(currentPage / 10.0);
+		int pageGroupStart = (currentPageGroup - 1) * 10 + 1;
+		int pageGroupEnd = currentPageGroup * 10;
+		return new PageGroupDto(pageGroupStart, pageGroupEnd);
+	}
 	
 	public int insertArticle(ArticleDto dto) {
 		return dao.insertArticle(dto);

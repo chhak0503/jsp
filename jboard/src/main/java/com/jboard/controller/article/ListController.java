@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.jboard.dto.ArticleDto;
+import com.jboard.dto.PageGroupDto;
 import com.jboard.dto.UserDto;
 import com.jboard.service.ArticleService;
 
@@ -28,6 +29,9 @@ public class ListController extends HttpServlet {
 		// 현재 페이지 번호 구하기
 		int currentPage = service.getCurrentPage(pg);
 		
+		// 현재 페이지 그룹 구하기
+		PageGroupDto pageGroup = service.getCurrentPageGroup(currentPage);
+		
 		// 전체 게시물 갯수 구하기
 		int total = service.selectCountTotal();
 		
@@ -37,13 +41,13 @@ public class ListController extends HttpServlet {
 		// 페이지 시작 번호 구하기
 		int start = service.getStartNum(currentPage);
 		
-		
 		// 데이터 조회
 		List<ArticleDto> articles = service.selectArticles(start);
 		
 		// 공유 참조
 		req.setAttribute("articles", articles);
 		req.setAttribute("lastPageNum", lastPageNum);
+		req.setAttribute("pageGroup", pageGroup);
 		
 		// 포워드
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/article/list.jsp");

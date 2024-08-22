@@ -27,7 +27,7 @@
                         <tr>
                             <td>${article.no}</td>
                             <td><a href="#">${article.title}</a>&nbsp;[${article.comment}]</td>
-                            <td>${article.writer}</td>
+                            <td>${article.nick}</td>
                             <td>${article.rdate}</td>
                             <td>${article.hit}</td>
                         </tr>

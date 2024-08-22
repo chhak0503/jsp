@@ -1,5 +1,6 @@
 package com.jboard.dao;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,11 +41,19 @@ public class ArticleDao extends DBHelper {
 			if(rs.next()) {
 				no = rs.getInt(1);
 			}
-			conn.commit();			
-			closeAll();
+			conn.commit();	
 			
 		}catch (Exception e) {
 			logger.error(e.getMessage());
+			
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				logger.error(e1.getMessage());
+			}
+			
+		}finally {
+			closeAll();
 		}
 		
 		return no;
@@ -76,13 +85,16 @@ public class ArticleDao extends DBHelper {
 				dto.setWriter(rs.getString(8));
 				dto.setRegip(rs.getString(9));
 				dto.setRdateSubString(rs.getString(10));
+				dto.setNick(rs.getString(11));
 				articles.add(dto);
 			}
-			closeAll();
 			
 		}catch (Exception e) {
 			logger.error(e.getMessage());
+		}finally {
+			closeAll();
 		}
+		
 		return articles;
 	}
 	

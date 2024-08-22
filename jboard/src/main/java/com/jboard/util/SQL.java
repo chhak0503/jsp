@@ -27,7 +27,10 @@ public class SQL {
 											+ "`regDate`=NOW()";
 	
 	// article
-	public static final String SELECT_ARTICLES = "select * from `article`";
+	public static final String SELECT_ARTICLES = "SELECT a.*, b.nick  from `article` AS a "
+												+ "JOIN `user` AS b ON a.writer = b.uid "
+												+ "ORDER BY `no` DESC";
+	
 	public static final String SELECT_MAX_NO = "select MAX(`no`) from `article`";
 	public static final String INSERT_ARTICLE = "insert into article set "
 												+ "`title`=?,"

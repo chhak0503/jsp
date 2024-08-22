@@ -94,31 +94,44 @@ public enum FileService {
 		return files;
 	}
 	
-	public void fileDownload(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+	public void fileDownload(HttpServletRequest req, HttpServletResponse resp) {
 		
 		// 공유 참조값 가져오기
 		FileDto fileDto = (FileDto) req.getAttribute("fileDto");
 		
-		// response 헤더정보 수정
-		resp.setContentType("application/octet-stream");
-		resp.setHeader("Content-Disposition", "attachment; filename="+URLEncoder.encode(fileDto.getoName(), "utf-8"));
-		resp.setHeader("Content-Transfer-Encoding", "binary");
-		resp.setHeader("Pragma", "no-cache");
-		resp.setHeader("Cache-Control", "private");
-
-		// 파일 내용 스트림 처리
-		ServletContext ctx = req.getServletContext();
-		String path = ctx.getRealPath("/uploads");
-		File file = new File(path + File.separator + fileDto.getsName());
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
 		
-		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
-		BufferedOutputStream bos = new BufferedOutputStream(resp.getOutputStream());
-		
-		bis.transferTo(bos);
-		bos.flush();
-		
-		bos.close();
-		bis.close();
+		try {
+			// response 헤더정보 수정
+			resp.setContentType("application/octet-stream");
+			resp.setHeader("Content-Disposition", "attachment; filename="+URLEncoder.encode(fileDto.getoName(), "utf-8"));
+			resp.setHeader("Content-Transfer-Encoding", "binary");
+			resp.setHeader("Pragma", "no-cache");
+			resp.setHeader("Cache-Control", "private");
+	
+			// 파일 내용 스트림 처리
+			ServletContext ctx = req.getServletContext();
+			String path = ctx.getRealPath("/uploads");
+			File file = new File(path + File.separator + fileDto.getsName());
 			
+			bis = new BufferedInputStream(new FileInputStream(file));
+			bos = new BufferedOutputStream(resp.getOutputStream());
+			
+			bis.transferTo(bos);
+			bos.flush();
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}finally {
+			
+			try {
+				bos.close();
+				bis.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 }

@@ -1,7 +1,12 @@
 package com.jboard.controller.comment;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.JsonObject;
 import com.jboard.dto.CommentDto;
 import com.jboard.service.CommentService;
 
@@ -16,7 +21,8 @@ public class WriteController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private CommentService service = CommentService.INSTANCE;
-
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	}
@@ -36,12 +42,18 @@ public class WriteController extends HttpServlet {
 		dto.setContent(comment);
 		dto.setWriter(writer);
 		dto.setRegip(regip);
+		logger.debug(dto.toString());
 		
 		// 댓글 등록
-		service.insertComment(dto);
+		int result = service.insertComment(dto);
 		
-		// 리다이렉트
-		resp.sendRedirect("/jboard/article/view.do?no="+parent);
+		// JSON 생성 및 출력
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		PrintWriter printWriter = resp.getWriter();
+		printWriter.print(json);
+		
 	}
 	
 }

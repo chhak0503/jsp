@@ -19,7 +19,10 @@ public class CommentDao extends DBHelper {
 	private CommentDao() {}
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	public void insertComment(CommentDto dto) {
+	public int insertComment(CommentDto dto) {
+		
+		int result = 0;
+		
 		try {
 			conn = getConnection();
 			psmt = conn.prepareStatement(SQL.INSERT_COMMENT);
@@ -27,12 +30,13 @@ public class CommentDao extends DBHelper {
 			psmt.setString(2, dto.getContent());
 			psmt.setString(3, dto.getWriter());
 			psmt.setString(4, dto.getRegip());
-			psmt.executeUpdate();
+			result = psmt.executeUpdate();
 		}catch (Exception e) {
 			logger.error(e.getMessage());
 		}finally {
 			closeAll();
 		}
+		return result;
 	}
 	
 	public CommentDto selectComment(int no) {

@@ -10,8 +10,8 @@ public enum CommentService {
 	INSTANCE;
 	private CommentDao dao = CommentDao.getInstance();
 	
-	public void insertComment(CommentDto dto) {
-		dao.insertComment(dto);
+	public int insertComment(CommentDto dto) {
+		return dao.insertComment(dto);
 	}
 	public CommentDto selectComment(int no) {
 		return dao.selectComment(no);

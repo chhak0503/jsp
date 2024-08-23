@@ -6,7 +6,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>글보기</title>
-    <link rel="stylesheet" href="/jboard/css/style.css">    
+    <link rel="stylesheet" href="/jboard/css/style.css">
+    <script>
+    	window.onload = function(){
+    		
+    		const commentForm = document.commentForm;
+    		
+    		
+    		// 댓글 등록
+    		commentForm.onsubmit = function(e){
+    			e.preventDefault();
+    			
+    			const parent = commentForm.parent.value;
+    			const writer = commentForm.writer.value;
+    			const comment = commentForm.comment.value;
+    			
+    			// 폼 데이터 생성
+    			const formData = new FormData();
+    			formData.append("parent", parent);
+    			formData.append("writer", writer);
+    			formData.append("comment", comment);
+    			
+    			console.log(formData);
+    			
+    			fetch('/jboard/comment/write.do', {
+    					method: 'POST',
+    					body: formData
+    				})
+    				.then(resp => resp.json())
+    				.then(data => {
+    					console.log(data);
+    					
+    					if(data.result > 0){
+    						alert('댓글이 등록되었습니다.');
+    					}else{
+    						alert('댓글 등록이 실패했습니다.');
+    					}
+    					
+    				})
+    				.catch(err => {
+    					console.log(err);
+    				});
+    		}
+    	}
+    </script>
+    
 </head>
 <body>
     <div id="container">
@@ -67,9 +111,9 @@
                 <!-- 댓글입력폼 -->
                 <section class="commentForm">
                     <h3>댓글쓰기</h3>
-                    <form action="/jboard/comment/write.do" method="post">
-                    	<input type="text" name="parent" value="${articleDto.no}"/>
-                    	<input type="text" name="writer" value="${sessUser.uid}"/>
+                    <form name="commentForm">
+                    	<input type="hidden" name="parent" value="${articleDto.no}"/>
+                    	<input type="hidden" name="writer" value="${sessUser.uid}"/>
                         <textarea name="comment"></textarea>
                         <div>
                             <a href="#" class="btnCancel">취소</a>

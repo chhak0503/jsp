@@ -16,7 +16,7 @@
     		// 동적 이벤트 처리
     		document.addEventListener('click', function(e){
     			
-    			
+    			// 삭제
     			if(e.target.classList == 'commentRemove'){
     				e.preventDefault();
     				

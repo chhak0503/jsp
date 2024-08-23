@@ -361,6 +361,10 @@ main {
     text-align: right;
 }
 
+.view > .commentList > article .commentCancel {
+	display: none;
+}
+
 .view > .commentList > .empty {
     padding: 20px 0;
     text-align: center;

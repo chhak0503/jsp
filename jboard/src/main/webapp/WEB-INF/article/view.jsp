@@ -18,69 +18,74 @@
     		// 동적 이벤트 처리
     		document.addEventListener('click', function(e){
     			
-    			// 수정완료
-    			if(e.target.classList == 'commentUpdate'){
+    			const article = e.target.closest('article');
+				const textarea = article.querySelector('textarea');
+				const commentRemove = article.querySelector('.commentRemove');
+				const commentCancel = article.querySelector('.commentCancel');
+				const commentModify = article.querySelector('.commentModify');
+    			
+    			// 취소
+    			if(e.target.classList == 'commentCancel'){
     				e.preventDefault();
-    				
-    				const article = e.target.closest('article');
-    				const textarea = article.querySelector('textarea');
-    				
-    				const no = e.target.dataset.no;
-    				const comment = textarea.value;
-    				
-    				const formData = new FormData();
-    				formData.append("no", no);
-    				formData.append("comment", comment);
-    				
-    				fetch('/jboard/comment/modify.do', {
-    						method: 'POST',
-    						body: formData
-    					})
-    					.then(resp => resp.json())
-    					.then(data => {
-    						console.log(data);
-    						
-    						if(data.result > 0){
-    							alert('댓글이 수정되었습니다.');
-    							
-    							textarea.readOnly = true;
-    	        				textarea.style.background = 'transparent';
-    	        				textarea.style.border = 'none';        				
-    	        				e.target.innerText = '수정';
-    							
-    						}
-    					})
-    					.catch(err => {
-    						console.log(err);
-    					});
+    				textarea.value = originalText;
+    				textareaEditMode(false);
     			}
     			
-    			// 수정 & 취소
+    			// 수정 & 수정완료
     			if(e.target.classList == 'commentModify'){
     				e.preventDefault();
-    				
-    				const article = e.target.closest('article');
-    				const textarea = article.querySelector('textarea');
-    				
-    				const mode = e.target.innerText;
+        			const mode = commentModify.innerText;
     				
     				if(mode == '수정'){
     					originalText = textarea.value;
-    					
+    					textareaEditMode(true);
+    				}else{
+    					// 수정완료
+	    				const no = commentModify.dataset.no;
+	    				const comment = textarea.value;
+	    				
+	    				const formData = new FormData();
+	    				formData.append("no", no);
+	    				formData.append("comment", comment);
+	    				
+	    				fetch('/jboard/comment/modify.do', {
+	    						method: 'POST',
+	    						body: formData
+	    					})
+	    					.then(resp => resp.json())
+	    					.then(data => {
+	    						console.log(data);
+	    						
+	    						if(data.result > 0){
+	    							alert('댓글이 수정되었습니다.');
+	    							textareaEditMode(false);
+	    						}
+	    					})
+	    					.catch(err => {
+	    						console.log(err);
+	    					});
+    				}
+    			}
+    			
+    			// 댓글 Textarea 수정모드/일반모드 전환 함수
+    			function textareaEditMode(edit) {
+        			if(edit){
+        				// 수정모드
         				textarea.readOnly = false;
         				textarea.style.background = 'white';
         				textarea.style.border = '1px solid #555';
         				textarea.focus();
-        				e.target.innerText = '취소';
-    				}else{
-    					textarea.value = originalText;
-    					
-    					textarea.readOnly = true;
-        				textarea.style.background = 'transparent';
-        				textarea.style.border = 'none';        				
-        				e.target.innerText = '수정';
-    				}
-    			}    			
+        				commentModify.innerText = '수정완료';
+        				commentCancel.style.display = 'inline';
+        			}else{
+        				// 일반모드
+        				textarea.readOnly = true;
+	    				textarea.style.background = 'transparent';
+	    				textarea.style.border = 'none';
+	    				commentModify.innerText = '수정';
+	    				commentCancel.style.display = 'none';
+        			}
+        		}
     			
     			// 삭제
     			if(e.target.classList == 'commentRemove'){
@@ -89,7 +94,6 @@
    					if(!confirm('정말 삭제하시겠습니까?')){
        					return;
        				}
-       				
        				const article = e.target.closest('article');
        				const no = e.target.dataset.no; // a태그 data-no 속성값 가져오기
        				
@@ -97,23 +101,23 @@
        					.then(resp => resp.json())
        					.then(data => {
        						console.log(data);
-       						
        						if(data.result > 0){
        							alert('댓글이 삭제되었습니다.');
        							
        							// 동적 삭제 처리
        							article.remove();
-       							
        						}else{
        							alert('댓글이 삭제가 실패했습니다.');
        						}
-       						
        					})
        					.catch(err => {
        						console.log(err);
        					});
     			}
     		});
+    		
+    		
+    		
     		
     		// 댓글 등록
     		commentForm.onsubmit = function(e){
@@ -129,7 +133,6 @@
     			formData.append("parent", parent);
     			formData.append("writer", writer);
     			formData.append("comment", comment);
-    			
     			console.log(formData);
     			
     			fetch('/jboard/comment/write.do', {
@@ -153,6 +156,7 @@
 								                        <div>
 									                        <a href="#" class="commentRemove">삭제</a>
 								                            <a href="#" class="commentModify">수정</a>
+								                            <a href="#" class="commentUpdate">수정완료</a>
 								                        </div>
 								                    </article>`;
     						
@@ -220,8 +224,8 @@
 	                        <div>
 	                        	<!-- HTML 사용자 정의 속성을 이용한 삭제/수정 -->
 	                            <a href="#" class="commentRemove" data-no="${comment.no}">삭제</a>
+	                            <a href="#" class="commentCancel" data-no="${comment.no}">취소</a>
 	                            <a href="#" class="commentModify" data-no="${comment.no}">수정</a>
-	                            <a href="#" class="commentUpdate" data-no="${comment.no}">수정완료</a>
 	                        </div>
 	                    </article>
                     </c:forEach>

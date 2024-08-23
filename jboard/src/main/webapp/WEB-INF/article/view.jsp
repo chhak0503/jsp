@@ -24,7 +24,7 @@
 				const commentCancel = article.querySelector('.commentCancel');
 				const commentModify = article.querySelector('.commentModify');
     			
-    			// 취소
+    			// 취소(224라인에 취소 a태그 추가할것)
     			if(e.target.classList == 'commentCancel'){
     				e.preventDefault();
     				textarea.value = originalText;
@@ -115,9 +115,6 @@
        					});
     			}
     		});
-    		
-    		
-    		
     		
     		// 댓글 등록
     		commentForm.onsubmit = function(e){
@@ -224,7 +221,7 @@
 	                        <div>
 	                        	<!-- HTML 사용자 정의 속성을 이용한 삭제/수정 -->
 	                            <a href="#" class="commentRemove" data-no="${comment.no}">삭제</a>
-	                            <a href="#" class="commentCancel" data-no="${comment.no}">취소</a>
+	                            <a href="#" class="commentCancel" data-no="${comment.no}">취소</a><!-- style.css 364라인 display: none; 처리하기 -->
 	                            <a href="#" class="commentModify" data-no="${comment.no}">수정</a>
 	                        </div>
 	                    </article>

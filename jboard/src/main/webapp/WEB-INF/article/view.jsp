@@ -13,16 +13,19 @@
     		const commentForm = document.commentForm;
     		const commentList = document.getElementsByClassName('commentList')[0];
     		
+    		let originalText = '';
+    		
     		// 동적 이벤트 처리
     		document.addEventListener('click', function(e){
     			
     			// 수정완료
     			if(e.target.classList == 'commentUpdate'){
+    				e.preventDefault();
     				
     				const article = e.target.closest('article');
     				const textarea = article.querySelector('textarea');
     				
-    				const no = "";
+    				const no = e.target.dataset.no;
     				const comment = textarea.value;
     				
     				const formData = new FormData();
@@ -36,6 +39,16 @@
     					.then(resp => resp.json())
     					.then(data => {
     						console.log(data);
+    						
+    						if(data.result > 0){
+    							alert('댓글이 수정되었습니다.');
+    							
+    							textarea.readOnly = true;
+    	        				textarea.style.background = 'transparent';
+    	        				textarea.style.border = 'none';        				
+    	        				e.target.innerText = '수정';
+    							
+    						}
     					})
     					.catch(err => {
     						console.log(err);
@@ -51,13 +64,17 @@
     				
     				const mode = e.target.innerText;
     				
-    				if(mode == '수정'){    					        				
+    				if(mode == '수정'){
+    					originalText = textarea.value;
+    					
         				textarea.readOnly = false;
         				textarea.style.background = 'white';
         				textarea.style.border = '1px solid #555';
         				textarea.focus();
         				e.target.innerText = '취소';
     				}else{
+    					textarea.value = originalText;
+    					
     					textarea.readOnly = true;
         				textarea.style.background = 'transparent';
         				textarea.style.border = 'none';        				

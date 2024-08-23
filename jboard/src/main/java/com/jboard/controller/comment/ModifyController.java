@@ -33,10 +33,15 @@ public class ModifyController extends HttpServlet {
 		CommentDto dto = new CommentDto();
 		dto.setNo(no);
 		dto.setContent(comment);
+		logger.debug(dto.toString());
 		
-		service.updateComment(dto);
+		int result = service.updateComment(dto);
 	
-	
+		JsonObject json = new JsonObject();
+		json.addProperty("result", result);
+		
+		PrintWriter writer = resp.getWriter();
+		writer.print(json);
 	}
 	
 }

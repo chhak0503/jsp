@@ -47,6 +47,7 @@ public class SQL {
 												+ "`rdate`=NOW()";
 	
 	// comment
+	public static final String SELECT_COMMENTS = "select * from `comment` where `parent`=?";
 	public static final String INSERT_COMMENT = "insert into `comment` set "
 												+ "`parent`=?,"
 												+ "`content`=?,"

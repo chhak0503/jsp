@@ -1,5 +1,6 @@
 package com.jboard.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,8 +43,33 @@ public class CommentDao extends DBHelper {
 	public CommentDto selectComment(int no) {
 		return null;
 	}
-	public List<CommentDto> selectComments() {
-		return null;
+	public List<CommentDto> selectComments(String parent) {
+		
+		List<CommentDto> comments = new ArrayList<>();
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COMMENTS);
+			psmt.setString(1, parent);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				CommentDto dto = new CommentDto();
+				dto.setNo(rs.getInt(1));
+				dto.setParent(rs.getInt(2));
+				dto.setContent(rs.getString(3));
+				dto.setWriter(rs.getString(4));
+				dto.setRegip(rs.getString(5));
+				dto.setRdate(rs.getString(6));
+				comments.add(dto);
+			}
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}finally {
+			closeAll();
+		}
+		
+		return comments;
 	}
 	
 	public void updateComment(CommentDto dto) {

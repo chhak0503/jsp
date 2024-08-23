@@ -16,8 +16,8 @@ public enum CommentService {
 	public CommentDto selectComment(int no) {
 		return dao.selectComment(no);
 	}
-	public List<CommentDto> selectComments() {
-		return dao.selectComments();
+	public List<CommentDto> selectComments(String parent) {
+		return dao.selectComments(parent);
 	}
 	public void updateComment(CommentDto dto) {
 		dao.updateComment(dto);

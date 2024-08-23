@@ -21,7 +21,7 @@
     			const writer = commentForm.writer.value;
     			const comment = commentForm.comment.value;
     			
-    			// 폼 데이터 생성
+    			// 폼 데이터 생성(JSON 데이터로 전송하게 되면 getParameter 수신 처리가 안되기 때문에 FormData로 전송)
     			const formData = new FormData();
     			formData.append("parent", parent);
     			formData.append("writer", writer);
@@ -36,13 +36,11 @@
     				.then(resp => resp.json())
     				.then(data => {
     					console.log(data);
-    					
     					if(data.result > 0){
     						alert('댓글이 등록되었습니다.');
     					}else{
     						alert('댓글 등록이 실패했습니다.');
     					}
-    					
     				})
     				.catch(err => {
     					console.log(err);
@@ -92,20 +90,22 @@
                 <!-- 댓글리스트 -->
                 <section class="commentList">
                     <h3>댓글목록</h3>
-                    <article class="comment">
-                        <span>
-                            <span>길동이</span>
-                            <span>20-05-13</span>
-                        </span>
-                        <textarea name="comment" readonly>댓글 샘플입니다.</textarea>
-                        <div>
-                            <a href="#">삭제</a>
-                            <a href="#">수정</a>
-                        </div>
-                    </article>
-                    <p class="empty">
-                        등록된 댓글이 없습니다.
-                    </p>
+                    <c:forEach var="comment" items="${comments}">
+	                    <article class="comment">
+	                        <span>
+	                            <span>${comment.writer}</span>
+	                            <span>${comment.rdate}</span>
+	                        </span>
+	                        <textarea name="comment" readonly>${comment.content}</textarea>
+	                        <div>
+	                            <a href="#">삭제</a>
+	                            <a href="#">수정</a>
+	                        </div>
+	                    </article>
+                    </c:forEach>
+                    <c:if test="${empty comments}">
+	                    <p class="empty">등록된 댓글이 없습니다.</p>
+                    </c:if>
                 </section>
     
                 <!-- 댓글입력폼 -->

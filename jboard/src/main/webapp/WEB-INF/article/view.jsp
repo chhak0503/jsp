@@ -54,7 +54,6 @@
     						
     						commentList.insertAdjacentHTML('beforeend', commentArticle);
     						
-    						
     					}else{
     						alert('댓글 등록이 실패했습니다.');
     					}

@@ -61,6 +61,8 @@ public class SQL {
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 	
+	public static final String UPDATE_COMMENT = "update `comment` set `content`=? where `no`=?";
+	
 	public static final String DELETE_COMMENT = "delete from `comment` where `no`=?";
 	
 	

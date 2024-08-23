@@ -103,8 +103,21 @@ public class CommentDao extends DBHelper {
 		return comments;
 	}
 	
-	public void updateComment(CommentDto dto) {
+	public int updateComment(CommentDto dto) {
+		int result = 0;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_COMMENT);
+			psmt.setString(1, dto.getContent());
+			psmt.setInt(2, dto.getNo());
+			result = psmt.executeUpdate();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}finally {
+			closeAll();
+		}
 		
+		return result;
 	}
 	
 	public int deleteComment(String no) {

@@ -16,32 +16,85 @@
     		// 동적 이벤트 처리
     		document.addEventListener('click', function(e){
     			
-    			// 삭제
-    			if(e.target.classList == 'commentRemove'){
-    				e.preventDefault();
+    			// 수정완료
+    			if(e.target.classList == 'commentUpdate'){
     				
     				const article = e.target.closest('article');
-    				const no = e.target.dataset.no; // a태그 data-no 속성값 가져오기
+    				const textarea = article.querySelector('textarea');
     				
-    				fetch('/jboard/comment/delete.do?no='+no)
+    				const no = "";
+    				const comment = textarea.value;
+    				
+    				const formData = new FormData();
+    				formData.append("no", no);
+    				formData.append("comment", comment);
+    				
+    				fetch('/jboard/comment/modify.do', {
+    						method: 'POST',
+    						body: formData
+    					})
     					.then(resp => resp.json())
     					.then(data => {
     						console.log(data);
-    						
-    						if(data.result > 0){
-    							alert('댓글이 삭제되었습니다.');
-    							
-    							// 동적 삭제 처리
-    							article.remove();
-    							
-    						}else{
-    							alert('댓글이 삭제가 실패했습니다.');
-    						}
-    						
     					})
     					.catch(err => {
     						console.log(err);
     					});
+    			}
+    			
+    			// 수정 & 취소
+    			if(e.target.classList == 'commentModify'){
+    				e.preventDefault();
+    				
+    				const article = e.target.closest('article');
+    				const textarea = article.querySelector('textarea');
+    				
+    				const mode = e.target.innerText;
+    				
+    				if(mode == '수정'){    					        				
+        				textarea.readOnly = false;
+        				textarea.style.background = 'white';
+        				textarea.style.border = '1px solid #555';
+        				textarea.focus();
+        				e.target.innerText = '취소';
+    				}else{
+    					textarea.readOnly = true;
+        				textarea.style.background = 'transparent';
+        				textarea.style.border = 'none';        				
+        				e.target.innerText = '수정';
+    				}
+    			}    			
+    			
+    			// 삭제
+    			if(e.target.classList == 'commentRemove'){
+    				e.preventDefault();
+    					
+   					if(!confirm('정말 삭제하시겠습니까?')){
+       					return;
+       				}
+       				
+       				const article = e.target.closest('article');
+       				const no = e.target.dataset.no; // a태그 data-no 속성값 가져오기
+       				
+       				fetch('/jboard/comment/delete.do?no='+no)
+       					.then(resp => resp.json())
+       					.then(data => {
+       						console.log(data);
+       						
+       						if(data.result > 0){
+       							alert('댓글이 삭제되었습니다.');
+       							
+       							// 동적 삭제 처리
+       							article.remove();
+       							
+       						}else{
+       							alert('댓글이 삭제가 실패했습니다.');
+       						}
+       						
+       					})
+       					.catch(err => {
+       						console.log(err);
+       					});
     			}
     		});
     		
@@ -151,6 +204,7 @@
 	                        	<!-- HTML 사용자 정의 속성을 이용한 삭제/수정 -->
 	                            <a href="#" class="commentRemove" data-no="${comment.no}">삭제</a>
 	                            <a href="#" class="commentModify" data-no="${comment.no}">수정</a>
+	                            <a href="#" class="commentUpdate" data-no="${comment.no}">수정완료</a>
 	                        </div>
 	                    </article>
                     </c:forEach>

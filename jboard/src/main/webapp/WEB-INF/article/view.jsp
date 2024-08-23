@@ -36,14 +36,14 @@
     				.then(resp => resp.json())
     				.then(data => {
     					console.log(data);
-    					if(data.result > 0){
+    					if(data != null){
     						alert('댓글이 등록되었습니다.');
     						
     						// 등록한 댓글 동적 태그 생성
     						const commentArticle = `<article class="comment">
 								                        <span>
 								                            <span>\${data.rdate}</span>
-								                            <span>\${data.nick}</span>
+								                            <span>\${data.writer}</span>
 								                        </span>
 								                        <textarea name="comment" readonly>\${data.content}</textarea>
 								                        <div>

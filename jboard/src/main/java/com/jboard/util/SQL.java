@@ -47,6 +47,8 @@ public class SQL {
 												+ "`rdate`=NOW()";
 	
 	// comment
+	public static final String SELECT_COMMENT = "select * from `comment` where `no`=?";
+	
 	public static final String SELECT_COMMENTS = "SELECT a.*, b.nick from `comment` AS a "
 												+ "JOIN `user` AS b ON a.writer = b.uid "
 												+ "where `parent`=? "

@@ -1,5 +1,6 @@
 package com.jboard.dao;
 
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,26 +23,55 @@ public class CommentDao extends DBHelper {
 	
 	public int insertComment(CommentDto dto) {
 		
-		int result = 0;
+		int pk = 0;
 		
 		try {
-			conn = getConnection();
-			psmt = conn.prepareStatement(SQL.INSERT_COMMENT);
+			conn = getConnection();			
+			psmt = conn.prepareStatement(SQL.INSERT_COMMENT, Statement.RETURN_GENERATED_KEYS); // INSERT 실행 후 자동 생성되는 pk값을 리턴하는 옵션 
 			psmt.setInt(1, dto.getParent());
 			psmt.setString(2, dto.getContent());
 			psmt.setString(3, dto.getWriter());
 			psmt.setString(4, dto.getRegip());
-			result = psmt.executeUpdate();
+			psmt.executeUpdate();
+			
+			rs = psmt.getGeneratedKeys();
+			if(rs.next()) {
+				pk = rs.getInt(1);
+			}
+			
 		}catch (Exception e) {
 			logger.error(e.getMessage());
 		}finally {
 			closeAll();
 		}
-		return result;
+		
+		return pk;
 	}
 	
 	public CommentDto selectComment(int no) {
-		return null;
+		CommentDto dto = null;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COMMENT);
+			psmt.setInt(1, no);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				dto = new CommentDto();
+				dto.setNo(rs.getInt(1));
+				dto.setParent(rs.getInt(2));
+				dto.setContent(rs.getString(3));
+				dto.setWriter(rs.getString(4));
+				dto.setRegip(rs.getString(5));
+				dto.setRdate(rs.getString(6));
+			}
+			
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}finally {
+			closeAll();
+		}
+		return dto;
 	}
 	public List<CommentDto> selectComments(String parent) {
 		

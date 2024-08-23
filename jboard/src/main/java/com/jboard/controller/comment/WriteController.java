@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.jboard.dto.CommentDto;
 import com.jboard.service.CommentService;
@@ -45,17 +46,17 @@ public class WriteController extends HttpServlet {
 		logger.debug(dto.toString());
 		
 		// 댓글 등록
-		service.insertComment(dto);
+		int pk = service.insertComment(dto);
+		
+		// 방금 등록한 댓글 조회
+		CommentDto commentDto = service.selectComment(pk);
 		
 		// JSON 생성 및 출력
-		JsonObject json = new JsonObject();
-		//json.addProperty("nick", commentDto.getNick());
-		//json.addProperty("rdate", commentDto.getRdate());
-		//json.addProperty("content", commentDto.getContent());
+		Gson gson = new Gson();
+		String json = gson.toJson(commentDto);
 		
 		PrintWriter printWriter = resp.getWriter();
 		printWriter.print(json);
-		
 	}
 	
 }

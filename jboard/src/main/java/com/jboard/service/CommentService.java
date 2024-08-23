@@ -22,7 +22,7 @@ public enum CommentService {
 	public void updateComment(CommentDto dto) {
 		dao.updateComment(dto);
 	}
-	public void deleteComment(int no) {
-		dao.deleteComment(no);
+	public int deleteComment(String no) {
+		return dao.deleteComment(no);
 	}
 }

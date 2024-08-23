@@ -107,7 +107,33 @@ public class CommentDao extends DBHelper {
 		
 	}
 	
-	public void deleteComment(int no) {
+	public int deleteComment(String no) {
+		 
+		int result = 0;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement(SQL.DELETE_COMMENT);
+			psmt.setString(1, no);
+			result = psmt.executeUpdate();
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+		}finally {
+			closeAll();
+		}
 		
+		return result;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

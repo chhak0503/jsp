@@ -61,6 +61,8 @@ public class SQL {
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 	
+	public static final String DELETE_COMMENT = "delete from `comment` where `no`=?";
+	
 	
 	// file
 	public static final String SELECT_FILE = "select * from file where fno=?";

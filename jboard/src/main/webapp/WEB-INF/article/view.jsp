@@ -13,10 +13,43 @@
     		const commentForm = document.commentForm;
     		const commentList = document.getElementsByClassName('commentList')[0];
     		
+    		// 동적 이벤트 처리
+    		document.addEventListener('click', function(e){
+    			
+    			
+    			if(e.target.classList == 'commentRemove'){
+    				e.preventDefault();
+    				
+    				const article = e.target.closest('article');
+    				const no = e.target.dataset.no; // a태그 data-no 속성값 가져오기
+    				
+    				fetch('/jboard/comment/delete.do?no='+no)
+    					.then(resp => resp.json())
+    					.then(data => {
+    						console.log(data);
+    						
+    						if(data.result > 0){
+    							alert('댓글이 삭제되었습니다.');
+    							
+    							// 동적 삭제 처리
+    							article.remove();
+    							
+    						}else{
+    							alert('댓글이 삭제가 실패했습니다.');
+    						}
+    						
+    					})
+    					.catch(err => {
+    						console.log(err);
+    					});
+    			}
+    		});
+    		
     		// 댓글 등록
     		commentForm.onsubmit = function(e){
     			e.preventDefault();
     			
+    			// 사용자가 입력한 값 취합
     			const parent = commentForm.parent.value;
     			const writer = commentForm.writer.value;
     			const comment = commentForm.comment.value;
@@ -36,19 +69,20 @@
     				.then(resp => resp.json())
     				.then(data => {
     					console.log(data);
+    					
     					if(data != null){
     						alert('댓글이 등록되었습니다.');
     						
     						// 등록한 댓글 동적 태그 생성
-    						const commentArticle = `<article class="comment">
+    						const commentArticle = `<article class='comment'>
 								                        <span>
 								                            <span>\${data.rdate}</span>
 								                            <span>\${data.writer}</span>
 								                        </span>
-								                        <textarea name="comment" readonly>\${data.content}</textarea>
+								                        <textarea name='comment' readonly>\${data.content}</textarea>
 								                        <div>
-								                            <a href="#">삭제</a>
-								                            <a href="#">수정</a>
+									                        <a href="#" class="commentRemove">삭제</a>
+								                            <a href="#" class="commentModify">수정</a>
 								                        </div>
 								                    </article>`;
     						
@@ -114,8 +148,9 @@
 	                        </span>
 	                        <textarea name="comment" readonly>${comment.content}</textarea>
 	                        <div>
-	                            <a href="#">삭제</a>
-	                            <a href="#">수정</a>
+	                        	<!-- HTML 사용자 정의 속성을 이용한 삭제/수정 -->
+	                            <a href="#" class="commentRemove" data-no="${comment.no}">삭제</a>
+	                            <a href="#" class="commentModify" data-no="${comment.no}">수정</a>
 	                        </div>
 	                    </article>
                     </c:forEach>

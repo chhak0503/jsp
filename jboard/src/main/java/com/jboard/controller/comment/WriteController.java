@@ -45,11 +45,13 @@ public class WriteController extends HttpServlet {
 		logger.debug(dto.toString());
 		
 		// 댓글 등록
-		int result = service.insertComment(dto);
+		service.insertComment(dto);
 		
 		// JSON 생성 및 출력
 		JsonObject json = new JsonObject();
-		json.addProperty("result", result);
+		//json.addProperty("nick", commentDto.getNick());
+		//json.addProperty("rdate", commentDto.getRdate());
+		//json.addProperty("content", commentDto.getContent());
 		
 		PrintWriter printWriter = resp.getWriter();
 		printWriter.print(json);

@@ -11,7 +11,7 @@
     	window.onload = function(){
     		
     		const commentForm = document.commentForm;
-    		
+    		const commentList = document.getElementsByClassName('commentList')[0];
     		
     		// 댓글 등록
     		commentForm.onsubmit = function(e){
@@ -38,6 +38,23 @@
     					console.log(data);
     					if(data.result > 0){
     						alert('댓글이 등록되었습니다.');
+    						
+    						// 등록한 댓글 동적 태그 생성
+    						const commentArticle = `<article class="comment">
+								                        <span>
+								                            <span>\${data.rdate}</span>
+								                            <span>\${data.nick}</span>
+								                        </span>
+								                        <textarea name="comment" readonly>\${data.content}</textarea>
+								                        <div>
+								                            <a href="#">삭제</a>
+								                            <a href="#">수정</a>
+								                        </div>
+								                    </article>`;
+    						
+    						commentList.insertAdjacentHTML('beforeend', commentArticle);
+    						
+    						
     					}else{
     						alert('댓글 등록이 실패했습니다.');
     					}
@@ -93,8 +110,8 @@
                     <c:forEach var="comment" items="${comments}">
 	                    <article class="comment">
 	                        <span>
-	                            <span>${comment.writer}</span>
 	                            <span>${comment.rdate}</span>
+	                            <span>${comment.nick}</span>
 	                        </span>
 	                        <textarea name="comment" readonly>${comment.content}</textarea>
 	                        <div>

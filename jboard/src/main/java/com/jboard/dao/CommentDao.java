@@ -60,7 +60,8 @@ public class CommentDao extends DBHelper {
 				dto.setContent(rs.getString(3));
 				dto.setWriter(rs.getString(4));
 				dto.setRegip(rs.getString(5));
-				dto.setRdate(rs.getString(6));
+				dto.setRdateSubstring(rs.getString(6));
+				dto.setNick(rs.getString(7));
 				comments.add(dto);
 			}
 		}catch (Exception e) {

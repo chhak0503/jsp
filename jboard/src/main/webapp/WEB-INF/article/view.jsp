@@ -218,12 +218,15 @@
 	                            <span>${comment.nick}</span>
 	                        </span>
 	                        <textarea name="comment" readonly>${comment.content}</textarea>
-	                        <div>
-	                        	<!-- HTML 사용자 정의 속성을 이용한 삭제/수정 -->
-	                            <a href="#" class="commentRemove" data-no="${comment.no}">삭제</a>
-	                            <a href="#" class="commentCancel" data-no="${comment.no}">취소</a><!-- style.css 364라인 display: none; 처리하기 -->
-	                            <a href="#" class="commentModify" data-no="${comment.no}">수정</a>
-	                        </div>
+	                        
+	                        <c:if test="${sessUser.uid eq comment.writer}">
+		                        <div>
+		                        	<!-- HTML 사용자 정의 속성을 이용한 삭제/수정 -->
+		                            <a href="#" class="commentRemove" data-no="${comment.no}">삭제</a>
+		                            <a href="#" class="commentCancel" data-no="${comment.no}">취소</a><!-- style.css 364라인 display: none; 처리하기 -->
+		                            <a href="#" class="commentModify" data-no="${comment.no}">수정</a>
+		                        </div>
+	                        </c:if>
 	                    </article>
                     </c:forEach>
                     <c:if test="${empty comments}">

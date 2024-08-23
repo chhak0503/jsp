@@ -79,8 +79,43 @@ public class FileDao extends DBHelper {
 		}
 	}
 	
-	public void deleteFile(int fno) {
+	public FileDto deleteFile(String fno) {
+		/*
+		 * 삭제하기 전에 반드시 파일의 글 번호를 반환해야 함
+		 * 반환된 파일의 글 번호를 가지고 해당 글의 file 컬럼 값을 -1 해줘야 함
+		 */
 		
-	}
+		// 삭제할 파일의 글번호
+		int ano = 0;
+		String sname = null;
+		
+		try {
+			conn = getConnection();
+			conn.setAutoCommit(false);
+			
+			psmt_1 = conn.prepareStatement(SQL.SELECT_FILE_FOR_DELETE);
+			psmt_1.setString(1, fno);
+			logger.info("deleteFile : " + psmt_1);
+			
+			psmt_2 = conn.prepareStatement(SQL.DELETE_FILE);			
+			psmt_2.setString(1, fno);
+			logger.info("deleteFile : " + psmt_2);
+			
+			rs = psmt_1.executeQuery();
+			psmt_2.executeUpdate();
+			conn.commit();
+			
+			if(rs.next()) {
+				ano = rs.getInt(1);
+				sname = rs.getString(2);
+			}
+			
+			closeAll();
+		}catch (Exception e) {
+			logger.error("deleteFile : " + e.getMessage());
+		}
+		
+		return new FileDto(ano, sname);
+	} 
 	
 }

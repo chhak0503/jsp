@@ -67,6 +67,7 @@ public class SQL {
 	
 	
 	// file
+	public static final String SELECT_FILE_FOR_DELETE = "SELECT `ano`, `sname` FROM `File` WHERE `fno`=?";
 	public static final String SELECT_FILE = "select * from file where fno=?";
 	public static final String INSERT_FILE = "insert into file set "
 											+ "`ano`=?,"
@@ -75,7 +76,7 @@ public class SQL {
 											+ "`rdate`=NOW()";
 	
 	public static final String UPDATE_FILE_DOWNLOAD_COUNT = "update file set `download` = `download` + 1 where `fno`=?";
-	
+	public static final String DELETE_FILE = "DELETE FROM `File` WHERE `fno`=?";
 }
 
 

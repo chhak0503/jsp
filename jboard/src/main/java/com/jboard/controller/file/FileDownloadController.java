@@ -1,4 +1,4 @@
-package com.jboard.controller.article;
+package com.jboard.controller.file;
 
 import java.io.IOException;
 
@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/fileDownload.do")
+@WebServlet("/file/download.do")
 public class FileDownloadController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

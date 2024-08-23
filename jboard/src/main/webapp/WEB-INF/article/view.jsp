@@ -67,7 +67,9 @@
                 <!-- 댓글입력폼 -->
                 <section class="commentForm">
                     <h3>댓글쓰기</h3>
-                    <form action="#">
+                    <form action="/jboard/comment/write.do" method="post">
+                    	<input type="text" name="parent" value="${articleDto.no}"/>
+                    	<input type="text" name="writer" value="${sessUser.uid}"/>
                         <textarea name="comment"></textarea>
                         <div>
                             <a href="#" class="btnCancel">취소</a>

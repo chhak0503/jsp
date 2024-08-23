@@ -63,9 +63,9 @@ public class FileDao extends DBHelper {
 		return null;
 	}
 	
-	public void updateFile(FileDto dto) {
-		
+	public void updateFile(FileDto dto) {		
 	}
+	
 	public void updateFileDownloadCount(String fno) {
 		try {
 			conn = getConnection();

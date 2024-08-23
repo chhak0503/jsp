@@ -46,6 +46,15 @@ public class SQL {
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 	
+	// comment
+	public static final String INSERT_COMMENT = "insert into `comment` set "
+												+ "`parent`=?,"
+												+ "`content`=?,"
+												+ "`writer`=?,"
+												+ "`regip`=?,"
+												+ "`rdate`=NOW()";
+	
+	
 	// file
 	public static final String SELECT_FILE = "select * from file where fno=?";
 	public static final String INSERT_FILE = "insert into file set "
